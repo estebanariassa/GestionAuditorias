@@ -27,6 +27,8 @@ class ObjetivosAuditoria {
                     cumplido: false
                 });
                 localStorage.setItem('auditorias', JSON.stringify(auditorias));
+                return true;
             }
         }
+        return false;
 }   }
