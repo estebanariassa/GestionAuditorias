@@ -1,3 +1,20 @@
+const webix = require('webix');
+
+webix.ui({
+  container: "webix-container",
+  view: "list",
+  autoheight: true,
+  template: "Name: #name#, Age: #age#",
+  data: [
+    { id: 1, name: "John", age: 25 },
+    { id: 2, name: "Jane", age: 30 },
+  ]
+});
+
+
+
+
+
 class IndicadoresAuditoria {
     constructor(db) {
       this.db = db; // instancia de conexión a la base de datos
