@@ -1,0 +1,255 @@
+/* Estilos generales */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Georgia', serif;
+  background-color: #fff;
+}
+
+/* Encabezado */
+.header {
+  background-color: #7BAF3E; /* Verde */
+  color: #1F3366; /* Azul oscuro */
+  padding: 20px 40px;
+  font-size: 2.5rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Layout principal */
+.main-container {
+  display: flex;
+  height: calc(100vh - 80px);
+}
+
+/* Barra lateral */
+.sidebar {
+  width: 200px;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+}
+
+.sidebar a {
+  display: block;
+  color: #000;
+  text-decoration: none;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.sidebar a:hover {
+  font-weight: bold;
+}
+
+/* Contenido principal */
+.content {
+  flex: 1;
+  padding: 40px;
+  background-color: #fff;
+}
+
+.section {
+  display: none;
+}
+
+.section.active {
+  display: block;
+}
+
+.content .section.active {
+  text-align: left;
+}
+
+/* Inputs y textareas */
+input, textarea {
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  width: 100%;
+  resize: none;
+}
+
+/* Etiquetas */
+label {
+  display: block;
+  margin-top: 20px;
+  font-weight: bold;
+  color: #1F3366;
+}
+
+/* Para No. Auditoría */
+label[for="numero-auditoria"] {
+  color: blue;
+  font-weight: bold;
+}
+
+/* Bloque de Procesos, Número y Ciclo */
+.bloque-procesos {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.Procesos, .Numero, .Ciclo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Bloque de Propósito y Alcance */
+.bloque-proposito-alcance {
+  margin: 30px 0;
+}
+
+.bloque-proposito-alcance label {
+  margin-bottom: 8px;
+}
+
+.bloque-proposito-alcance textarea {
+  width: 100%;
+  min-height: 200px; /* Altura grande */
+  padding: 15px;
+  border-radius: 10px;
+  font-size: 16px;
+  background-color: #fafafa;
+  border: 1px solid #ccc;
+}
+
+/* Bloques de fecha, auditor, apertura, cierre */
+.bloque-fecha-auditor,
+.bloque-apertura,
+.bloque-cierre {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.campo, .FechaA, .CierreA {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilos de segundo auditor */
+.bloque-segundo-auditor textarea {
+  margin-top: 10px;
+  padding: 15px;
+  font-size: 16px;
+  background-color: #fafafa;
+}
+
+/* Botón Añadir */
+.btn-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background-color: #f9f9f9;
+  color: #000;
+  font-size: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 999px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.btn-add .circle {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid #000;
+  border-radius: 50%;
+  font-size: 14px;
+}
+
+/* Bloque de Documentos Aplicables */
+.bloque-documentos {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.campo-doc {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.campo-doc label {
+  margin-bottom: 8px;
+}
+
+.campo-doc input,
+.campo-doc textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 14px;
+  background-color: #fafafa;
+}
+
+/* Focus en inputs y textareas */
+input:focus, textarea:focus {
+  border: 2px solid #4285F4;
+  outline: none;
+  background-color: #fff;
+}
+/*Acá va el codigo CSS de los botones*/
+.botones {
+  display: flex;
+  gap: 20px; /* Espacio entre los botones */
+}
+
+.botones button {
+  background-color: #1e3264; /* Azul oscuro */
+  color: white; /* Texto blanco */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px; /* Bordes redondeados */
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.botones button:hover {
+  background-color: #16294f; /* Un tono más oscuro al pasar el mouse */
+}
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.section {
+  flex: 1;
+  padding: 20px;
+}
+
+.footer {
+  padding: 20px;
+  background-color: #f5f5f5;
+  text-align: left; /* Alinea el contenido a la izquierda */
+}
+
+.cerrar-sesion {
+  background: none;
+  border: none;
+  color: black;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.cerrar-sesion:hover {
+  text-decoration: underline;
+}

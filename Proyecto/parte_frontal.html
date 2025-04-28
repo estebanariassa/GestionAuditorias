@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>El Comité - Login</title>
+  <link rel="stylesheet" href="parte_frontal.css"> <!-- Tu hoja de estilos -->
+</head>
+<body>
+  <div class="background">
+    
+    <!-- Contenedor del Login -->
+    <div class="login-container">
+      <h2>Iniciar sesión</h2>
+      <form onsubmit="return validarLogin()">
+        <input type="text" id="usuario" placeholder="Usuario" required>
+        <input type="password" id="contrasena" placeholder="Contraseña" required>
+        <button type="submit">Continuar</button>
+      </form>
+    </div>
+
+    <!-- Título -->
+    <div class="header">
+      <h1>El Comité</h1>
+      <p>Gestión de auditorías</p>
+    </div>
+
+    <!-- Círculos decorativos -->
+    <div class="circle circle1"></div>
+    <div class="circle circle2"></div>
+    <div class="circle circle3"></div>
+    <div class="circle circle4"></div>
+    <div class="circle circle5"></div>
+    <div class="circle circle6"></div>
+  </div>
+
+  <!-- Validación con JavaScript -->
+  <script>
+    function validarLogin() {
+      const usuario = document.getElementById("usuario").value;
+      const contrasena = document.getElementById("contrasena").value;
+
+      // Usuario y contraseña válidos
+      if (usuario === "admin" && contrasena === "1234") {
+        window.location.href = "seccion_iniciada.html"; // Redirige si es correcto
+        return false;
+      } else {
+        alert("Usuario o contraseña incorrectos.");
+        return false; // No envía el formulario
+      }
+    }
+  </script>
+</body>
+</html>
+
