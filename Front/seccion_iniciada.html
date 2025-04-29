@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>El Comité - Auditorías</title>
+  <link rel="stylesheet" href="seccion_iniciada.css">
+  <link rel="stylesheet" href="parte_de_graficas.html">
+</head>
+<body>
+
+  <!-- Encabezado superior -->
+  <header class="header">
+    <h1>El Comité</h1>
+  </header>
+
+  <!-- Contenedor general -->
+  <div class="main-container">
+
+    <!-- Menú lateral -->
+    <nav class="sidebar">
+      <a href="#" onclick="mostrarSeccion('planear')">✏️ Planear auditoria</a>
+      <a href="#" onclick="mostrarSeccion('mis')">💻 Mis auditorias</a>
+      <a href="parte_de_graficas.html" onclick="mostrarSeccion('graficos')">Generar Tablero</a>
+    </nav>
+
+    <!-- Área de contenido -->
+    <div class="content">
+      <div id="planear" class="section active">
+        <h2>Planear auditoría</h2>
+    
+        <!-- BLOQUE PROCESOS, NUMERO, CICLO -->
+        <div class="bloque-procesos">
+          <div class="Procesos">
+            <label for="procesos">Procesos</label>
+            <input type="text" id="procesos" placeholder="Escribe el proceso de la auditoría">
+          </div>
+          <div class="Numero">
+            <label for="numero-auditoria">No. Auditoría</label>
+            <input type="number" id="numero-auditoria" value="0">
+          </div>
+          <div class="Ciclo">
+            <label for="ciclo">Ciclo</label>
+            <input type="number" id="ciclo" value="0">
+          </div>
+        </div>
+    
+        <!-- BLOQUE PROPÓSITO Y ALCANCE -->
+        <div class="bloque-proposito-alcance">
+          <label for="proposito">Propósito</label>
+          <textarea id="proposito" placeholder="Escribe el propósito de la auditoría" rows="5"></textarea>
+    
+          <label for="alcance">Alcance</label>
+          <textarea id="alcance" placeholder="Escribe el alcance de la auditoría" rows="5"></textarea>
+        </div>
+    
+        <!-- BLOQUE FECHA - AUDITOR LÍDER - AUDITADOS -->
+        <div class="bloque-fecha-auditor">
+          <div class="campo">
+            <label for="fecha">Fecha</label>
+            <input type="date" id="fecha">
+          </div>
+          <div class="campo">
+            <label for="auditor-lider">Auditor líder</label>
+            <textarea id="auditor-lider" placeholder="Seleccionar líder" rows="1"></textarea>
+          </div>
+          <div class="campo">
+            <label for="auditados">Auditados</label>
+            <textarea id="auditados" placeholder="Nombre del auditado" rows="1"></textarea>
+          </div>
+        </div>
+    
+        <!-- BLOQUE FECHA DE APERTURA -->
+        <div class="bloque-apertura">
+          <div class="FechaA">
+            <label for="fecha-apertura">Fecha de Apertura</label>
+            <input type="date" id="fecha-apertura">
+          </div>
+          <div class="FechaA">
+            <label for="hora-inicio">Hora de inicio</label>
+            <input type="time" id="hora-inicio">
+          </div>
+          <div class="FechaA">
+            <label for="lugar-reunion">Lugar de reunión</label>
+            <textarea id="lugar-reunion" placeholder="Escriba el lugar de la auditoría" rows="1"></textarea>
+          </div>
+        </div>
+    
+        <!-- BLOQUE REUNIÓN DE CIERRE -->
+        <div class="bloque-cierre">
+          <div class="CierreA">
+            <label for="reunion-cierre">Reunión de cierre</label>
+            <input type="date" id="reunion-cierre">
+          </div>
+          <div class="CierreA">
+            <label for="hora-cierre">Hora de cierre</label>
+            <input type="time" id="hora-cierre">
+          </div>
+          <div class="CierreA">
+            <label for="lugar-cierre">Lugar de cierre</label>
+            <textarea id="lugar-cierre" placeholder="Ubicación de la auditoría" rows="1"></textarea>
+          </div>
+        </div>
+    
+        <!-- BLOQUE SEGUNDO AUDITOR -->
+        <div class="bloque-segundo-auditor" style="margin-top: 20px;">
+          <label for="segundo-auditor">Segundo Auditor</label>
+          <textarea id="segundo-auditor" placeholder="Escriba el segundo auditor" rows="5"></textarea>
+          <button class="btn-add" type="button">
+            Añadir
+            <span class="circle">+</span>
+          </button>
+        </div>
+    
+        <!-- BLOQUE DOCUMENTOS APLICABLES -->
+        <div class="bloque-documentos">
+          <div class="campo-doc">
+            <label for="documentos-aplicables">Documentos Aplicables</label>
+            <textarea id="documentos-aplicables" placeholder="Escriba los documentos que se necesitan en la auditoría" rows="5"></textarea>
+          </div>
+          <div class="campo-doc">
+            <label for="codigo-documento">Código del documento</label>
+            <input type="number" id="codigo-documento">
+          </div>
+          <div class="campo-doc">
+            <label for="version-documento">Versión del documento</label>
+            <input type="number" id="version-documento">
+          </div>
+        </div>
+    
+      </div> <!-- Cierre sección planear -->
+      <div class="botones">
+        <button type="button">Confirmar</button>
+        <button type="button">Cancelar</button>
+      </div>
+      
+    </div> <!-- Cierre content -->
+    
+
+    <div id="mis" class="section">
+      <h2>Mis auditorias</h2>
+      <p>Aquí aparecerán tus auditorías registradas.</p>
+    </div>
+    
+    <footer class="footer">
+      <button type="button" class="cerrar-sesion">
+        &#x21B7; Cerrar sesión
+      </button>
+    </footer>
+    </div>
+  </div>
+
+  <script>
+    function mostrarSeccion(id) {
+      document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+    document.querySelector(".cerrar-sesion").addEventListener("click", cerrarSesion);
+
+    function cerrarSesion() {
+      localStorage.clear();
+      window.location.href = "parte_frontal.html";
+    }
+  </script>
+
+</body>
+</html>
