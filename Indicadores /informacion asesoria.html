@@ -10,3 +10,18 @@
         <h:commandButton value="Agregar" action="#{indicadoresAuditoriaBean.agregarObjetivo}" update="tablaObjetivos graficoCanvas" />
     </h:panelGrid>
 </h:form>
+
+<h:dataTable id="tablaObjetivos" value="#{indicadoresAuditoriaBean.objetivos}" var="objetivo" border="1">
+    <h:column>
+        <f:facet name="header">Objetivo de Auditoría</f:facet>
+        #{objetivo.nombre}
+    </h:column>
+    <h:column>
+        <f:facet name="header">Efectividad (%)</f:facet>
+        #{objetivo.efectividad}
+    </h:column>
+</h:dataTable>
+
+<h:panelGroup id="graficoCanvas">
+    <canvas id="graficoEfectividad"></canvas>
+</h:panelGroup>
