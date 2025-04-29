@@ -1,0 +1,12 @@
+<h2>Agregar Nueva Auditoría</h2>
+<h:form id="formAgregar">
+    <h:panelGrid columns="3" cellpadding="5">
+        <h:outputLabel value="Objetivo de Auditoría:" />
+        <h:inputText id="nuevoObjetivo" value="#{indicadoresAuditoriaBean.nuevoObjetivo}" />
+
+        <h:outputLabel value="Efectividad (%):" />
+        <h:inputText id="nuevaEfectividad" value="#{indicadoresAuditoriaBean.nuevaEfectividad}" />
+
+        <h:commandButton value="Agregar" action="#{indicadoresAuditoriaBean.agregarObjetivo}" update="tablaObjetivos graficoCanvas" />
+    </h:panelGrid>
+</h:form>
