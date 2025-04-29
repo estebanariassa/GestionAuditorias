@@ -1,0 +1,34 @@
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    function actualizarGrafico() {
+        const ctx = document.getElementById('graficoEfectividad').getContext('2d');
+        const objetivos = #{indicadoresAuditoriaBean.objetivos.stream().map(o -> "'" + o.getNombre() + "'").collect(java.util.stream.Collectors.joining(","))};
+        const efectividades = #{indicadoresAuditoriaBean.objetivos.stream().map(o -> o.getEfectividad()).collect(java.util.stream.Collectors.joining(","))};
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [#{objetivos}],
+                datasets: [{
+                    label: 'Efectividad (%)',
+                    data: [#{efectividades}],
+                    backgroundColor: '#3498db',
+                    borderColor: '#2980b9',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+    }
+
+    window.onload = actualizarGrafico;
+</script>
