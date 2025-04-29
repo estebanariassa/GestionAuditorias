@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>El Comité - Auditorías</title>
   <link rel="stylesheet" href="seccion_iniciada.css">
-  <link rel="Indicadores" href="">
+  <link rel="stylesheet" href="parte_de_graficas.html">
 </head>
 <body>
 
@@ -20,7 +20,7 @@
     <nav class="sidebar">
       <a href="#" onclick="mostrarSeccion('planear')">✏️ Planear auditoria</a>
       <a href="#" onclick="mostrarSeccion('mis')">💻 Mis auditorias</a>
-      <a href="#" onclick="mostrarSeccion('graficos')">Generar Tablero</a>
+      <a href="parte_de_graficas.html" onclick="mostrarSeccion('graficos')">Generar Tablero</a>
     </nav>
 
     <!-- Área de contenido -->
@@ -153,6 +153,12 @@
     function mostrarSeccion(id) {
       document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
       document.getElementById(id).classList.add('active');
+    }
+    document.querySelector(".cerrar-sesion").addEventListener("click", cerrarSesion);
+
+    function cerrarSesion() {
+      localStorage.clear();
+      window.location.href = "parte_frontal.html";
     }
   </script>
 
