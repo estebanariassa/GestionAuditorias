@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Auditorias</title>
+    <link rel="stylesheet" href="mis_auditorias.css ">
+
+</head>
+<body>
+  <header>
+    <div class="logo">El Comité</div>
+  </header>
+  <div class="container">
+    <nav class="sidebar">
+      <a href="seccion_iniciada.html" onclick="mostrarSeccion('planear')">✏️ Planear auditoría</a>
+      <a href="mis_auditorias.html" onclick="mostrarSeccion('mis')">💻 Mis auditorías</a>
+      <a href="parte_de_graficas.html">📊 Generar Tablero</a>
+    </nav>
+    
+
+    <main>
+      <div class="top-bar">
+        <h2>Mis auditorías</h2>
+        <div class="search-bar">
+          <input type="text" placeholder="Buscar por nombre" />
+        </div>
+        <button class="plan-btn">Planear auditoría</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Fecha</th>
+            <th>Auditor</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Auditoría 1</td>
+            <td>19/03/2025</td>
+            <td>Luis</td>
+            <td><button class="report-btn">Generar Informe</button></td>
+          </tr>
+          <tr>
+            <td>Auditoría 2</td>
+            <td>18/03/2025</td>
+            <td>Luis A</td>
+            <td><button class="report-btn">Generar Informe</button></td>
+          </tr>
+          <tr>
+            <td>Auditoría 3</td>
+            <td>17/03/2025</td>
+            <td>Luis B</td>
+            <td><button class="report-btn">Generar Informe</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+  </div>
+</body>
+</html>
