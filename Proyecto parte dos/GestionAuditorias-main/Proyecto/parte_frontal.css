@@ -11,22 +11,18 @@ body {
   overflow: hidden;
 }
 
-.header {
-  position: absolute;
+.head {
   top: 40px;
   left: 60px;
   color: #123366;
   text-align: center;
+  background-color: #4a8b1d; /* Verde institucional */
+  padding: 20px; 
 }
 
-.header h1 {
-  text-align: center;
-}
 
-.header p {
-  font-size: 18px;
-  color: #4b5c7d;
-}
+
+
 
 .login-container {
   position: absolute;
@@ -36,7 +32,7 @@ body {
   background-color: white;
   padding: 30px;
   border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
   width: 300px;
   text-align: center;
 }
@@ -52,6 +48,7 @@ body {
   margin: 10px 0;
   border-radius: 5px;
   border: 1px solid #ccc;
+  text-align: center;
 }
 
 .login-container button {
@@ -66,43 +63,7 @@ body {
 }
 
 /* Círculos */
-.circle {
-  position: absolute;
-  border-radius: 50%;
-  background-color: #92c13e;
-  border: 8px solid #123366;
-  z-index: 1;
-  opacity: 0.8; /* Un poco transparentes para que no molesten visualmente */
-}
 
-/* Círculos en posición de media luna */
-.circle1 {
-  width: 120px;
-  height: 120px;
-  top: -40px; /* Desplazado hacia arriba */
-  left: -40px; /* Desplazado hacia la izquierda */
-}
-
-.circle2 {
-  width: 100px;
-  height: 100px;
-  top: -30px;
-  right: -30px;
-}
-
-.circle3 {
-  width: 90px;
-  height: 90px;
-  bottom: -30px;
-  left: -30px;
-}
-
-.circle4 {
-  width: 110px;
-  height: 110px;
-  bottom: -40px;
-  right: -40px;
-}
 
 
   
