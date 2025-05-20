@@ -1,0 +1,33 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4; /* Color de fondo suave */
+}
+header {
+  background-color: #4a8b1d; /* Verde institucional */
+  padding: 1rem;
+}
+.sideb {
+  width: 200px;
+  background-color: #fff;
+  padding: 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra suave al lado */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilos para los enlaces de navegación en la sidebar */
+.sideb a {
+  padding: 0.75rem;
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+}
+
+/* Efecto hover para resaltar el enlace cuando el cursor pasa por encima */
+.sideb a:hover {
+  background-color: #e0e0e0;
+}
