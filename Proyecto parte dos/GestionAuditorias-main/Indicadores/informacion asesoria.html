@@ -35,5 +35,56 @@
         <canvas id="graficoEfectividad"></canvas>
     </h:panelGroup>
 
+    <!-- Botón para generar tablero -->
+<div class="audit-actions">
+    <button id="btn-generar-tablero" class="btn-tablero" onclick="mostrarFormularioTablero()">
+        📊 Generar Tablero de Indicadores
+    </button>
+</div>
+
+<!-- Modal/Formulario para datos del tablero -->
+<div id="modal-tablero" class="modal-tablero oculto">
+    <div class="modal-content">
+        <h3>Configurar Tablero de Auditoría</h3>
+        
+        <label for="puntuacion-cumplimiento">Puntuación de Cumplimiento (0-100):</label>
+        <input type="number" id="puntuacion-cumplimiento" min="0" max="100" placeholder="85">
+        
+        <label for="observaciones">Observaciones principales:</label>
+        <textarea id="observaciones" rows="4" placeholder="Describe los hallazgos principales..."></textarea>
+        
+        <div class="modal-actions">
+            <button class="btn-generar" onclick="generarTablero()">Generar Tablero</button>
+            <button class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Contenedor del tablero -->
+<div id="dashboard-container" class="dashboard-container oculto">
+    <div class="dashboard-header">
+        <h2>📊 Tablero de Indicadores - Auditoría</h2>
+        <button class="btn-cerrar" onclick="cerrarTablero()">×</button>
+    </div>
+    
+    <div class="dashboard-grid">
+        <div class="chart-box">
+            <h4>Cumplimiento General</h4>
+            <canvas id="grafico-cumplimiento"></canvas>
+        </div>
+        
+        <div class="chart-box">
+            <h4>Distribución de Riesgos</h4>
+            <canvas id="grafico-riesgos"></canvas>
+        </div>
+        
+        <div class="kpi-box">
+            <h4>Indicadores Clave</h4>
+            <div id="kpis-container"></div>
+        </div>
+    </div>
+</div>
+
+
 </body>
 </html>
