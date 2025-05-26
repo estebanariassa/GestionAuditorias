@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Acciones Correctivas</title>
+  <link rel="stylesheet" href="acciones_correctivas.css"/>
+
+</head>
+<body>
+
+  <!-- Barra superior "El Comité" -->
+    <!-- Encabezado superior -->
+    <header class="header">
+      <h1>El Comité</h1>
+    </header>
+  
+    <!-- Contenedor general -->
+    <div class="main-container">
+  
+      <!-- Menú lateral -->
+      <nav class="sidebar">
+        <a href="seccion_iniciada.html" onclick="mostrarSeccion('planear')">✏️ Planear auditoría</a>
+        <a href="mis_auditorias.html" onclick="mostrarSeccion('mis')">💻 Mis auditorías</a>
+        <a href="parte_de_graficas.html">📊 Generar Tablero</a>
+        <a href="acciones_correctivas.html">🔍 Acciones correctivas</a>
+      </nav>
+
+    <!-- Contenido principal -->
+    <main class="container">
+      <h1>ACCIONES CORRECTIVAS</h1>
+      <button class="new-action"><i class="fas fa-plus"></i> Nueva Acción Correctiva</button>
+
+      <div class="filter">
+        <label for="estado">Filtro por estado:</label>
+        <select id="estado">
+          <option>Todas</option>
+        </select>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Descripción</th>
+            <th>Responsable</th>
+            <th>Fecha Límite</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>001</td>
+            <td>Revisar cableado</td>
+            <td>J. Ramirez</td>
+            <td>Jun. 1 2025</td>
+          </tr>
+          <tr>
+            <td>002</td>
+            <td>Capacitar brigada</td>
+            <td>M. Ortega</td>
+            <td>Jun. 15 2025</td>
+          </tr>
+          <tr>
+            <td>003</td>
+            <td>Cambiar extintor</td>
+            <td>C. Muñoz</td>
+            <td>May. 15 2025</td>
+          </tr>
+          <tr>
+            <td>004</td>
+            <td>Reparar fuga</td>
+            <td>L. Gómez</td>
+            <td>Jul. 1 2025</td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+  </div>
+
+  <!-- Barra inferior -->
+  <footer class="bottom-nav">
+    <div class="nav-item"><i class="fas fa-edit"></i><span>Editar</span></div>
+    <div class="nav-item"><i class="fas fa-mouse-pointer"></i><span>Seleccionar</span></div>
+    <div class="nav-item"><i class="fas fa-download"></i><span>Guardar</span></div>
+    <div class="nav-item"><i class="fas fa-share-alt"></i><span>Compartir</span></div>
+  </footer>
+
+</body>
+</html>
