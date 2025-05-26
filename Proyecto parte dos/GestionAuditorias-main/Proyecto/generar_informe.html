@@ -10,56 +10,79 @@
     <header class="header">
         <h1>Generar Informe</h1>
     </header>
-    <nav class="sideb">
-      <a href="seccion_iniciada.html" onclick="mostrarSeccion('planear')">✏️ Planear auditoría</a>
-      <a href="mis_auditorias.html" onclick="mostrarSeccion('mis')">💻 Mis auditorías</a>
-      <a href="parte_de_graficas.html" onclick="mostrarSeccion('parte_de_graficas')">📊 Generar Tablero</a>
-    </nav>
-    <div class="contenedor-formulario">
-        <div class="proceso">
-            <label for="Procesos">Procesos</label>
-            <input type="text" id="procesos" placeholder="Escribe el proceso de la auditoría">
-        </div>
-        <div class="numero-auditoria">
-            <label for="numero-auditoria">No. Auditoría</label>
-            <input type="number" id="numero-auditoria" placeholder="Número Auditoria">
-        </div>
-        <div class="ciclo">
-            <label for="ciclo">Ciclo</label>
-            <input type="number" id="ciclo" placeholder="Número de ciclo">
-        </div>
+    <div class="contenedor-principal">
+  <div class="menu-lateral">
+    <ul>
+      <li><a href="seccion_iniciada.html" onclick="mostrarSeccion('planear')">✏️Planear auditoría</a></li>
+      <li><a href="mis_auditorias.html" onclick="mostrarSeccion('mis')">💻Mis Auditorias</a></li>
+      <li><a href="parte_de_graficas.html">📊Generar Tablero</a></li>
+    </ul>
+  </div>
+
+  <div class="contenedor-formulario">
+    <!-- Primera fila -->
+    <div class="fila-superior">
+      <div class="campo">
+        <label for="proceso">Procesos</label>
+        <input type="text" id="proceso" placeholder="Escribe el proceso de la auditoría">
+      </div>
+      <div class="campo">
+        <label for="auditoria">No. Auditoría</label>
+        <input type="text" id="auditoria" placeholder="Número Auditoría">
+      </div>
+      <div class="campo">
+        <label for="ciclo">Ciclo</label>
+        <input type="text" id="ciclo" placeholder="Número de ciclo">
+      </div>
     </div>
 
-
-    <div>
-        <label for="aspectos">Aspectos Auditados</label>
-        <input type="text" id="aspectos" placeholder="Escriba los aspectos auditados">
-    </div>
-    <div>
-        <label for="resultados">Resultados de la auditoria</label>
-        <input type="text" id="resultados"placeholder="Escriba los resultados de la auditoria">
-    </div>
-    <div>
-        <label for="puntos">Puntos relevantes de la auditoria</label>
-        <input type="text"id="puntos" placeholder="Escriba los puntos relevantes de la auditoria">
-    </div>
+    <!-- Segunda fila (tareas) -->
     <div class="tarea">
-        <div class="numero">
-            <label for="numero-tarea">Número de tarea</label>
-            <input type="number" id="numeor-tarea">
-        </div>
-        <div class="compromiso">
-            <label for="compromiso">Compromisos y tareas</label>
-            <input type="text" id="compromiso" placeholder="Nombre de la tarea">
-        </div>
-        <div class="fecha">
-            <label for="fecha">Fecha limite</label>
-            <input type="datetime" id="fecha">
-        </div>
-        <div class="responsable">
-            <label for="responsable">Responsable de la tarea</label>
-            <input type="text" id="responsable" placeholder="Responsable">
-        </div>
+      <div class="campo">
+        <label for="numero-tarea">Número de tarea</label>
+        <input type="number" id="numero-tarea">
+      </div>
+      <div class="campo">
+        <label for="compromiso">Compromisos y tareas</label>
+        <input type="text" id="compromiso" placeholder="Nombre de la tarea">
+      </div>
+      <div class="campo">
+        <label for="fecha">Fecha límite</label>
+        <input type="datetime-local" id="fecha">
+      </div>
+      <div class="campo">
+        <label for="responsable">Responsable de la tarea</label>
+        <input type="text" id="responsable" placeholder="Responsable">
+      </div>
     </div>
+
+    <!-- Textareas -->
+    <div class="campo-formulario">
+      <label for="aspectos">Aspectos auditados</label>
+      <textarea id="aspectos" maxlength="5000" placeholder="Escribe 5,000 caracteres máximo"></textarea>
+    </div>
+
+    <div class="campo-formulario">
+      <label for="resultados">Resultados de la auditoría</label>
+      <textarea id="resultados" maxlength="5000" placeholder="Escribe 5,000 caracteres máximo"></textarea>
+    </div>
+
+    <div class="campo-formulario">
+      <label for="puntos">Puntos relevantes</label>
+      <textarea id="puntos" maxlength="5000" placeholder="Escribe 5,000 caracteres máximo"></textarea>
+    </div>
+
+    <!-- Contenedor para los botones -->
+    <div class="botones-contenedor">
+      <div class="añadir">
+        <button id="btn-anadir">Añadir más tareas</button>
+      </div>
+      <div class="botones">
+        <button id="btn-generar">Generar Informe</button>
+        <button id="btn-limpiar">Limpiar</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
