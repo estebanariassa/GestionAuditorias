@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="parte de graficas.html">
+     <!-- Tus estilos existentes -->
+     <link rel="stylesheet" href="css/tablero.css">
+
+    <!-- Chart.js para los gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<script src="js/tablero-dashboard.js"></script>
+<body>
+    <h2>Agregar Nueva Auditoría</h2>
+    <h:form id="formAgregar">
+    <h:panelGrid columns="3" cellpadding="5">
+        <h:outputLabel value="Objetivo de Auditoría:" />
+        <h:inputText id="nuevoObjetivo" value="#{indicadoresAuditoriaBean.nuevoObjetivo}" />
+
+        <h:outputLabel value="Efectividad (%):" />
+        <h:inputText id="nuevaEfectividad" value="#{indicadoresAuditoriaBean.nuevaEfectividad}" />
+
+        <h:commandButton value="Agregar" action="#{indicadoresAuditoriaBean.agregarObjetivo}" update="tablaObjetivos graficoCanvas" />
+    </h:panelGrid>
+    </h:form>
+
+    <h:dataTable id="tablaObjetivos" value="#{indicadoresAuditoriaBean.objetivos}" var="objetivo" border="1">
+    <h:column>
+        <f:facet name="header">Objetivo de Auditoría</f:facet>
+        #{objetivo.nombre}
+    </h:column>
+    <h:column>
+        <f:facet name="header">Efectividad (%)</f:facet>
+        #{objetivo.efectividad}
+    </h:column>
+    </h:dataTable>
+
+    <h:panelGroup id="graficoCanvas">
+        <canvas id="graficoEfectividad"></canvas>
+    </h:panelGroup>
+
+    <!-- Botón para generar tablero -->
+<div class="audit-actions">
+    <button id="btn-generar-tablero" class="btn-tablero" onclick="mostrarFormularioTablero()">
+        📊 Generar Tablero de Indicadores
+    </button>
+</div>
+
+<!-- Modal/Formulario para datos del tablero -->
+<div id="modal-tablero" class="modal-tablero oculto">
+    <div class="modal-content">
+        <h3>Configurar Tablero de Auditoría</h3>
+        
+        <label for="puntuacion-cumplimiento">Puntuación de Cumplimiento (0-100):</label>
+        <input type="number" id="puntuacion-cumplimiento" min="0" max="100" placeholder="85">
+        
+        <label for="observaciones">Observaciones principales:</label>
+        <textarea id="observaciones" rows="4" placeholder="Describe los hallazgos principales..."></textarea>
+        
+        <div class="modal-actions">
+            <button class="btn-generar" onclick="generarTablero()">Generar Tablero</button>
+            <button class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Contenedor del tablero -->
+<div id="dashboard-container" class="dashboard-container oculto">
+    <div class="dashboard-header">
+        <h2>📊 Tablero de Indicadores - Auditoría</h2>
+        <button class="btn-cerrar" onclick="cerrarTablero()">×</button>
+    </div>
+    
+    <div class="dashboard-grid">
+        <div class="chart-box">
+            <h4>Cumplimiento General</h4>
+            <canvas id="grafico-cumplimiento"></canvas>
+        </div>
+        
+        <div class="chart-box">
+            <h4>Distribución de Riesgos</h4>
+            <canvas id="grafico-riesgos"></canvas>
+        </div>
+        
+        <div class="kpi-box">
+            <h4>Indicadores Clave</h4>
+            <div id="kpis-container"></div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

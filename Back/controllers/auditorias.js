@@ -36,3 +36,27 @@ class ObjetivosAuditoria {
         }
     }
 }
+const { pool, query } = require('../Config/db');
+
+exports.crearAuditoria = async (req, res) => {
+  try {
+    const { proceso, numero, ciclo, proposito, alcance } = req.body;
+    
+    const result = await query(
+      `INSERT INTO auditorias 
+       (proceso, numero, ciclo, proposito, alcance) 
+       VALUES (?, ?, ?, ?, ?)`,
+      [proceso, numero, ciclo, proposito, alcance]
+    );
+    
+    res.status(201).json({
+      id: result.insertId,
+      mensaje: 'Auditoría creada exitosamente'
+    });
+  } catch (error) {
+    if (error.code === 'ER_DUP_ENTRY') {
+      return res.status(400).json({ error: 'El número de auditoría ya existe' });
+    }
+    res.status(500).json({ error: 'Error al crear auditoría', detalles: error.message });
+  }
+};
