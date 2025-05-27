@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generar Informe</title>
     <link rel="stylesheet" href="generar_informe.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
     <header class="header">
@@ -20,69 +21,148 @@
   </div>
 
   <div class="contenedor-formulario">
-    <!-- Primera fila -->
-    <div class="fila-superior">
-      <div class="campo">
-        <label for="proceso">Procesos</label>
-        <input type="text" id="proceso" placeholder="Escribe el proceso de la auditoría">
-      </div>
-      <div class="campo">
-        <label for="auditoria">No. Auditoría</label>
-        <input type="text" id="auditoria" placeholder="Número Auditoría">
-      </div>
-      <div class="campo">
-        <label for="ciclo">Ciclo</label>
-        <input type="text" id="ciclo" placeholder="Número de ciclo">
-      </div>
+  <!-- Primera fila -->
+  <div class="fila-superior">
+    <div class="campo">
+      <label for="proceso">Procesos</label>
+      <input type="text" id="proceso" placeholder="Escribe el proceso de la auditoría">
     </div>
-
-    <!-- Segunda fila (tareas) -->
-    <div class="tarea">
-      <div class="campo">
-        <label for="numero-tarea">Número de tarea</label>
-        <input type="number" id="numero-tarea">
-      </div>
-      <div class="campo">
-        <label for="compromiso">Compromisos y tareas</label>
-        <input type="text" id="compromiso" placeholder="Nombre de la tarea">
-      </div>
-      <div class="campo">
-        <label for="fecha">Fecha límite</label>
-        <input type="datetime-local" id="fecha">
-      </div>
-      <div class="campo">
-        <label for="responsable">Responsable de la tarea</label>
-        <input type="text" id="responsable" placeholder="Responsable">
-      </div>
+    <div class="campo">
+      <label for="auditoria">No. Auditoría</label>
+      <input type="text" id="auditoria" placeholder="Número Auditoría">
     </div>
-
-    <!-- Textareas -->
-    <div class="campo-formulario">
-      <label for="aspectos">Aspectos auditados</label>
-      <textarea id="aspectos" maxlength="5000" placeholder="Escribe 5,000 caracteres máximo"></textarea>
+    <div class="campo">
+      <label for="ciclo">Ciclo</label>
+      <input type="text" id="ciclo" placeholder="Número de ciclo">
     </div>
+  </div>
 
-    <div class="campo-formulario">
-      <label for="resultados">Resultados de la auditoría</label>
-      <textarea id="resultados" maxlength="5000" placeholder="Escribe 5,000 caracteres máximo"></textarea>
+  <!-- Tareas -->
+  <div class="tarea">
+    <div class="campo">
+      <label>Número de tarea</label>
+      <input type="number" class="numero-tarea">
     </div>
-
-    <div class="campo-formulario">
-      <label for="puntos">Puntos relevantes</label>
-      <textarea id="puntos" maxlength="5000" placeholder="Escribe 5,000 caracteres máximo"></textarea>
+    <div class="campo">
+      <label>Compromisos y tareas</label>
+      <input type="text" class="compromiso" placeholder="Nombre de la tarea">
     </div>
+    <div class="campo">
+      <label>Fecha límite</label>
+      <input type="datetime-local" class="fecha">
+    </div>
+    <div class="campo">
+      <label>Responsable de la tarea</label>
+      <input type="text" class="responsable" placeholder="Responsable">
+    </div>
+  </div>
 
-    <!-- Contenedor para los botones -->
-    <div class="botones-contenedor">
-      <div class="añadir">
-        <button id="btn-anadir">Añadir más tareas</button>
-      </div>
-      <div class="botones">
-        <button id="btn-generar">Generar Informe</button>
-        <button id="btn-limpiar">Limpiar</button>
-      </div>
+  <!-- Textareas -->
+  <div class="campo-formulario">
+    <label for="aspectos">Aspectos auditados</label>
+    <textarea id="aspectos" maxlength="5000" placeholder="Escribe 5,000 caracteres máximo"></textarea>
+  </div>
+
+  <div class="campo-formulario">
+    <label for="resultados">Resultados de la auditoría</label>
+    <textarea id="resultados" maxlength="5000" placeholder="Escribe 5,000 caracteres máximo"></textarea>
+  </div>
+
+  <div class="campo-formulario">
+    <label for="puntos">Puntos relevantes</label>
+    <textarea id="puntos" maxlength="5000" placeholder="Escribe 5,000 caracteres máximo"></textarea>
+  </div>
+
+  <!-- Contenedor para los botones -->
+  <div class="botones-contenedor">
+    <div class="añadir">
+      <button id="btn-anadir" onclick="añadirTarea()">Añadir más tareas</button>
+    </div>
+    <div class="botones">
+      <button id="btn-generar">Generar Informe</button>
+      <button id="btn-limpiar">Limpiar</button>
     </div>
   </div>
 </div>
 </body>
+<script>
+  
+  function añadirTarea() {
+  const tarea = document.querySelector('.tarea');
+  const nuevaTarea = tarea.cloneNode(true);
+
+  // Limpiar los valores de los inputs clonados
+  nuevaTarea.querySelectorAll('input').forEach(input => input.value = '');
+
+  document.querySelector('.contenedor-formulario').insertBefore(nuevaTarea, document.querySelector('.botones-contenedor'));
+}
+
+document.getElementById('btn-limpiar').addEventListener('click', function () {
+  document.querySelectorAll('.tarea input, .campo-formulario textarea').forEach(input => {
+    input.value = '';
+  });
+});
+
+const { jsPDF } = window.jspdf;
+document.getElementById("btn-generar").addEventListener("click", generarFormularioAuditoria);
+
+function generarFormularioAuditoria() {
+  const doc = new jsPDF();
+  let y = 10;
+
+  doc.setFontSize(16);
+  doc.text("Formulario de Auditoría", 70, y);
+  y += 10;
+  doc.setFontSize(10);
+
+  // Datos generales
+  const proceso = document.getElementById("proceso").value;
+  const auditoria = document.getElementById("auditoria").value;
+  const ciclo = document.getElementById("ciclo").value;
+
+  y = agregarCampo(doc, "Procesos", proceso, y);
+  y = agregarCampo(doc, "No. Auditoría", auditoria, y);
+  y = agregarCampo(doc, "Ciclo", ciclo, y);
+
+  // Recorremos múltiples tareas por clase
+  const tareas = document.querySelectorAll(".tarea");
+  tareas.forEach((tarea, index) => {
+    const numeroTarea = tarea.querySelector('.numero-tarea')?.value || "";
+    const compromiso = tarea.querySelector('.compromiso')?.value || "";
+    const fecha = tarea.querySelector('.fecha')?.value || "";
+    const responsable = tarea.querySelector('.responsable')?.value || "";
+
+    y += 5;
+    doc.text(`Tarea ${index + 1}`, 10, y);
+    y = agregarCampo(doc, "Número de tarea", numeroTarea, y);
+    y = agregarCampo(doc, "Compromisos y tareas", compromiso, y);
+    y = agregarCampo(doc, "Fecha límite", fecha, y);
+    y = agregarCampo(doc, "Responsable de la tarea", responsable, y);
+  });
+
+  // Textareas
+  const aspectos = document.getElementById("aspectos").value;
+  const resultados = document.getElementById("resultados").value;
+  const puntos = document.getElementById("puntos").value;
+
+  y = agregarAreaTexto(doc, "Aspectos auditados", aspectos, y);
+  y = agregarAreaTexto(doc, "Resultados de la auditoría", resultados, y);
+  y = agregarAreaTexto(doc, "Puntos relevantes", puntos, y);
+
+  doc.save("formulario_auditoria.pdf");
+}
+
+function agregarCampo(doc, label, valor, y) {
+  doc.text(`${label}:`, 10, y);
+  doc.text(valor || "-", 60, y);
+  return y + 10;
+}
+
+function agregarAreaTexto(doc, label, valor, y) {
+  doc.text(`${label}:`, 10, y);
+  const lines = doc.splitTextToSize(valor || "-", 180);
+  doc.text(lines, 10, y + 5);
+  return y + lines.length * 5 + 5;
+}
+</script>
 </html>
