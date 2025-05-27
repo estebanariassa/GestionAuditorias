@@ -1,0 +1,119 @@
+/* Estilos generales */
+/* ========== RESET Y BASE ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Georgia', serif;
+  background-color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========== ENCABEZADO SUPERIOR ========== */
+header {
+  background-color: #4a8b1d; /* Verde institucional */
+  padding: 1rem;
+}
+
+
+
+/* Menú desplegable */
+.menu {
+  background-color: #2a2a2a;
+  width: 220px;
+  border-radius: 10px;
+  padding: 10px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  color: #fff;
+  position: absolute;
+  top: 70px;
+  right: 30px;
+  display: none;
+  z-index: 100;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.menu-item:hover {
+  background-color: #3a3a3a;
+}
+
+.menu-item i {
+  margin-right: 10px;
+  width: 20px;
+  text-align: center;
+}
+
+.menu-divider {
+  height: 1px;
+  background-color: #444;
+  margin: 8px 0;
+}
+
+/* ========== LAYOUT PRINCIPAL ========== */
+.main-container {
+  display: flex;
+  height: calc(100vh - 80px);
+}
+
+/* ========== BARRA LATERAL ========== */
+.sidebar {
+  width: 200px;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+}
+
+.sidebar a {
+  display: block;
+  color: #000;
+  text-decoration: none;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.sidebar a:hover {
+  font-weight: bold;
+}
+
+/* Contenido principal */
+.content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+/* Estilos tabla y formulario */
+table, th, td {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  padding: 8px;
+  text-align: left;
+  width: 100%;
+}
+
+#tablaAcciones {
+  margin-top: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+.form-container {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  padding: 15px;
+  max-width: 400px;
+}
+
