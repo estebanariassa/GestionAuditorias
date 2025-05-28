@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">    <title>Tablero de Indicadores</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="api.js"></script>
+    <link rel="stylesheet" href="tablero.css">
+</head>
+<body>
+    <header>
+        <div class="logo">El Comité</div>
+    </header>
+    <div class="container">
+        <nav class="sidebar">
+            <a href="seccion_iniciada.html">✏️ Planear auditoría</a>
+            <a href="mis_auditorias.html">💻 Mis auditorías</a>
+            <a href="tablero.html">📊 Generar Tablero</a>
+        </nav>
+        <main>
+            <div class="top-bar">
+                <h2>Tablero de Indicadores</h2>
+            </div>
+    <!-- Botón principal -->
+    <button class="btn-tablero" onclick="mostrarFormularioTablero()">Generar Tablero</button>
+
+    <!-- Modal de configuración -->
+    <div id="modal-tablero" class="modal-tablero oculto">
+        <div class="modal-content">
+            <h2>Configurar Tablero</h2>
+            <label for="puntuacion-cumplimiento">Puntuación de Cumplimiento (0-100):</label>
+            <input type="number" id="puntuacion-cumplimiento" min="0" max="100" style="width: 100%; margin-bottom: 10px;" />
+            
+            <label for="observaciones">Observaciones:</label>
+            <textarea id="observaciones" rows="3" style="width: 100%; margin-bottom: 20px;"></textarea>
+            
+            <div style="text-align: right;">
+                <button class="btn-generar" onclick="generarTablero()">Generar</button>
+                <button class="btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard-container" class="dashboard-container oculto">
+        <div style="text-align: right;">
+            <button class="btn-cancelar" onclick="cerrarTablero()">Cerrar Tablero</button>
+        </div>
+        <h2>Indicadores del Tablero</h2>
+        <div id="kpis-container" style="display: flex; gap: 30px; margin-bottom: 20px;">
+            <!-- KPIs se llenan por JS -->
+        </div>
+        <div class="dashboard-grid">
+            <div class="chart-box">
+                <h3>Cumplimiento</h3>
+                <canvas id="grafico-cumplimiento" width="200" height="200"></canvas>
+            </div>
+            <div class="chart-box">
+                <h3>Distribución de Riesgos</h3>
+                <canvas id="grafico-riesgos" width="200" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tu JS aquí (puedes pegarlo en un archivo externo o dentro de <script>) -->
+    <script>
+        // Variables globales
+        let graficoCumplimiento = null;
+        let graficoRiesgos = null;
+
+        // Mostrar formulario del tablero
+        function mostrarFormularioTablero() {
+            document.getElementById('modal-tablero').classList.remove('oculto');
+        }
+
+        // Cerrar modal
+        function cerrarModal() {
+            document.getElementById('modal-tablero').classList.add('oculto');
+        }
+
+        // Cerrar tablero
+        function cerrarTablero() {
+            document.getElementById('dashboard-container').classList.add('oculto');
+        }
+
+        // Generar tablero con los datos
+        function generarTablero() {
+            const puntuacion = document.getElementById('puntuacion-cumplimiento').value;
+            const observaciones = document.getElementById('observaciones').value;
+            
+            // Validaciones
+            if (!puntuacion || puntuacion < 0 || puntuacion > 100) {
+                alert('Por favor ingrese una puntuación válida (0-100)');
+                return;
+            }
+            
+            if (observaciones.length < 10) {
+                alert('Las observaciones deben tener al menos 10 caracteres');
+                return;
+            }
+            
+            // Cerrar modal y mostrar dashboard
+            cerrarModal();
+            document.getElementById('dashboard-container').classList.remove('oculto');
+            
+            // Generar gráficos
+            crearGraficos(puntuacion, observaciones);
+            
+            // Scroll hacia el tablero
+            document.getElementById('dashboard-container').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        // Crear gráficos con Chart.js
+        function crearGraficos(puntuacion, observaciones) {
+            // Destruir gráficos existentes
+            if (graficoCumplimiento) graficoCumplimiento.destroy();
+            if (graficoRiesgos) graficoRiesgos.destroy();
+            
+            // Gráfico de cumplimiento
+            const ctx1 = document.getElementById('grafico-cumplimiento');
+            graficoCumplimiento = new Chart(ctx1, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Cumplimiento', 'No Cumplimiento'],
+                    datasets: [{
+                        data: [puntuacion, 100 - puntuacion],
+                        backgroundColor: ['#28a745', '#dc3545'],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+            
+            // Gráfico de distribución de riesgos
+            const ctx2 = document.getElementById('grafico-riesgos');
+            graficoRiesgos = new Chart(ctx2, {
+                type: 'bar',
+                data: {
+                    labels: ['Alto', 'Medio', 'Bajo'],
+                    datasets: [{
+                        label: 'Nivel de Riesgo',
+                        data: [15, 35, 50],
+                        backgroundColor: ['#dc3545', '#ffc107', '#28a745']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            
+            // Actualizar KPIs
+            actualizarKPIs(puntuacion);
+        }            // Actualizar indicadores clave
+            function actualizarKPIs(puntuacion) {
+                const kpisContainer = document.getElementById('kpis-container');
+                
+                kpisContainer.innerHTML = `
+                    <div class="kpi-item">
+                        <span class="kpi-value">${puntuacion}%</span>
+                        <span class="kpi-label">Cumplimiento</span>
+                    </div>
+                    <div class="kpi-item">
+                        <span class="kpi-value">${Math.round(puntuacion / 20)}</span>
+                        <span class="kpi-label">Nivel de Madurez</span>
+                    </div>
+                `;
+            }
+
+            // Verificar autenticación al cargar la página
+            window.addEventListener('DOMContentLoaded', async () => {
+                const currentUser = getCurrentUser();
+                if (!currentUser) {
+                    window.location.href = 'Index.html';
+                    return;
+                }
+                
+                await loadDashboardData();
+            });
+
+            // Cargar datos del dashboard desde el backend
+            async function loadDashboardData() {
+                try {
+                    const dashboardData = await api.dashboard.getStats();
+                    console.log('Dashboard data:', dashboardData);
+                    
+                    // Mostrar estadísticas en el tablero si están disponibles
+                    if (dashboardData) {
+                        displayDashboardStats(dashboardData);
+                    }
+                } catch (error) {
+                    console.error('Error al cargar datos del dashboard:', error);
+                }
+            }
+
+            // Mostrar estadísticas del dashboard
+            function displayDashboardStats(data) {
+                const kpisContainer = document.getElementById('kpis-container');
+                
+                kpisContainer.innerHTML = `
+                    <div class="kpi-item">
+                        <span class="kpi-value">${data.totalAudits || 0}</span>
+                        <span class="kpi-label">Total Auditorías</span>
+                    </div>
+                    <div class="kpi-item">
+                        <span class="kpi-value">${data.totalUsers || 0}</span>
+                        <span class="kpi-label">Total Usuarios</span>
+                    </div>
+                    <div class="kpi-item">
+                        <span class="kpi-value">${data.totalIndicators || 0}</span>
+                        <span class="kpi-label">Indicadores</span>
+                    </div>
+                `;
+            }
+        </script>
+        </main>
+    </div>
+</body>
+</html>

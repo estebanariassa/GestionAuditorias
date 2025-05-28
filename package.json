@@ -1,25 +1,38 @@
 {
-  "name": "test-auditorias",
+  "name": "gestion-auditorias",
   "version": "1.0.0",
   "type": "module",
-  "description": "Sistema de gestión de auditorías internas",
+  "description": "Sistema de gestión de auditorías internas con SQLite3 y Sequelize",
   "main": "server/app.js",
   "scripts": {
     "start": "node server/app.js",
-    "server": "nodemon server/app.js",
-    "client": "cd client && npm start",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "install-all": "npm install && cd client && npm install && cd ../server && npm install"
+    "server": "node server/app.js",
+    "frontend": "node frontend/server.js",
+    "dev": "concurrently \"npm run server\" \"npm run frontend\"",
+    "setup": "npm install && node server/models/index.js",
+    "reset-db": "rm -f database/auditorias.db && node server/models/index.js"
+  },
+  "concurrently": {
+    "kill-others": true
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "mysql2": "^3.2.0",
-    "node-fetch": "^3.3.2"
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "sequelize": "^6.37.3",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
-    "concurrently": "^8.0.1",
-    "nodemon": "^2.0.22"
-  }
+    "concurrently": "^9.1.2",
+    "nodemon": "^3.1.0"
+  },
+  "keywords": [
+    "auditorias",
+    "sqlite",
+    "express",
+    "sequelize",
+    "node"
+  ],
+  "author": "El Comité",
+  "license": "MIT"
 }

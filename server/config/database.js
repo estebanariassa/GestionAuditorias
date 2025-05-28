@@ -1,34 +1,40 @@
-const mysql = require('mysql2/promise');
-require('dotenv').config();
+import { Sequelize } from 'sequelize';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const pool = mysql.createPool({
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || 'gestion_auditorias',
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
-  timezone: '-05:00',
-  decimalNumbers: true,
-  supportBigNumbers: true
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Configuración de la base de datos SQLite
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: path.join(__dirname, '../database/auditorias.db'),
+  logging: false, // Cambiar a console.log para ver las consultas SQL
+  define: {
+    timestamps: true,
+    underscored: false,
+    freezeTableName: true
+  }
 });
 
-// Verificación de conexión al iniciar
-pool.getConnection()
-  .then(conn => {
-    console.log('✅ Conexión exitosa a MySQL');
-    conn.release();
-  })
-  .catch(err => {
-    console.error('❌ Error de conexión a MySQL:', err.message);
-    process.exit(1);
-  });
-
-module.exports = {
-  pool,
-  query: async (sql, params) => {
-    const [rows] = await pool.execute(sql, params);
-    return rows;
+// Función para probar la conexión
+export const testConnection = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('✅ Conexión a la base de datos establecida correctamente.');
+  } catch (error) {
+    console.error('❌ No se pudo conectar a la base de datos:', error);
   }
-}; 
+};
+
+// Función para sincronizar modelos
+export const syncDatabase = async () => {
+  try {
+    await sequelize.sync({ force: false }); // force: true borra y recrea las tablas
+    console.log('✅ Base de datos sincronizada correctamente.');
+  } catch (error) {
+    console.error('❌ Error al sincronizar la base de datos:', error);
+  }
+};
+
+export default sequelize;
