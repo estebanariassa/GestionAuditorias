@@ -1,7 +1,7 @@
 {
   "name": "gestion-auditorias",
   "version": "1.0.0",
-  "type": "module",
+  "type": "commonjs",
   "description": "Sistema de gestión de auditorías internas con SQLite3 y Sequelize",
   "main": "server/app.js",
   "scripts": {

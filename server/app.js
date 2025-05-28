@@ -1,57 +1,25 @@
-import express from 'express';
-import cors from 'cors';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import dotenv from 'dotenv';
-
-// Importar rutas
-import authRoutes from './routes/auth.js';
-import auditRoutes from './routes/audits.js';
-import userRoutes from './routes/users.js';
-import dashboardRoutes from './routes/dashboard.js';
-
-// Importar modelos para sincronizar la base de datos
-import './models/index.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-dotenv.config();
-
+const express = require('express');
+const path = require('path');
 const app = express();
-const PORT = process.env.PORT || 5000;
 
-// Middlewares
-app.use(cors());
+// Middleware para parsear JSON y formularios
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Servir archivos estáticos del frontend
-app.use(express.static(path.join(__dirname, '../frontend')));
+// 1. Ruta estática: sirve archivos como CSS, JS, imágenes desde /public
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Rutas de la API
-app.use('/api/auth', authRoutes);
-app.use('/api/audits', auditRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/dashboard', dashboardRoutes);
-
-// Ruta para servir el frontend
+// 2. Ruta raíz: sirve el archivo Index.html al ingresar a localhost:3000/
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/Proyecto/Index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'Index.html'));
 });
 
-// Manejo de errores
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ error: 'Algo salió mal!' });
-});
+// 3. Rutas futuras de API (ejemplo)
+//app.use('/api/auditorias', require('./routes/auditorias')); // si lo implementas después
 
-// Ruta 404
-app.use('*', (req, res) => {
-  res.status(404).json({ error: 'Ruta no encontrada' });
-});
+// 4. Puerto del servidor
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
-  console.log(`📁 Frontend disponible en http://localhost:${PORT}`);
 });
