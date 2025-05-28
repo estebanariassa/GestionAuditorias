@@ -1,7 +1,7 @@
 /* Estilo general del body */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family:Georgia, 'Times New Roman', Times, serif;
   background-color: #f4f4f4; /* Color de fondo suave */
 }
 
@@ -13,7 +13,7 @@ header {
 
 /* Texto del logo dentro del header */
 .logo {
-  color: #fff;
+  color: hsl(0, 0%, 0%);
   font-size: 2rem;
   font-weight: bold;
 }
@@ -38,7 +38,7 @@ header {
 .sidebar a {
   padding: 0.75rem;
   text-decoration: none;
-  color: #333;
+  color: hsl(0, 0%, 0%);
   font-weight: bold;
   margin-bottom: 0.5rem;
   border-radius: 5px;
@@ -68,6 +68,7 @@ main {
   padding: 0.5rem;
   border-radius: 5px;
   border: 1px solid #ccc;
+  font-family: 'Georgia', serif;
 }
 
 /* Botón azul para "Planear auditoría" */
@@ -78,6 +79,7 @@ main {
   padding: 0.6rem 1rem;
   border-radius: 5px;
   cursor: pointer;
+  font-family: 'Georgia', serif;
 }
 
 /* Tabla con auditorías */
@@ -105,5 +107,6 @@ th, td {
   padding: 0.5rem 1rem;
   border-radius: 5px;
   cursor: pointer;
+  font-family: 'Georgia', serif;
 }
 

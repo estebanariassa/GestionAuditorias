@@ -129,6 +129,7 @@ input, textarea {
   font-size: 14px;
   width: 100%;
   resize: none;
+  font-family: 'Georgia', serif;
 }
 
 label {
@@ -136,6 +137,7 @@ label {
   margin-top: 20px;
   font-weight: bold;
   color: #1F3366;
+  font-family: 'Georgia', serif;
 }
 
 label[for="numero-auditoria"] {
@@ -159,6 +161,7 @@ label[for="numero-auditoria"] {
 
 .bloque-proposito-alcance {
   margin: 30px 0;
+  font-family: 'Georgia', serif;
 }
 
 .bloque-proposito-alcance label {
@@ -175,6 +178,7 @@ label[for="numero-auditoria"] {
   background-color: #fafafa;
   border: 1px solid #ccc;
   min-height: 200px;
+  font-family: 'Georgia', serif;
 }
 
 .bloque-fecha-auditor,
@@ -184,10 +188,12 @@ label[for="numero-auditoria"] {
   display: flex;
   gap: 20px;
   margin-bottom: 30px;
+  font-family: 'Georgia', serif;
 }
 
 .bloque-documentos {
   margin-top: 30px;
+  font-family: 'Georgia', serif;
 }
 
 /* === Botón Añadir === */
@@ -204,6 +210,7 @@ label[for="numero-auditoria"] {
   font-weight: 500;
   cursor: pointer;
   margin-top: 10px;
+  font-family: 'Georgia', serif;
 }
 
 .btn-add .circle {
@@ -253,10 +260,12 @@ label[for="numero-auditoria"] {
   display: flex;
   align-items: center;
   gap: 5px;
+  font-family: 'Georgia', serif;
 }
 
 .cerrar-sesion:hover {
   text-decoration: underline;
+  font-family: 'Georgia', serif;
 }
 
 /* ========== INPUT FOCUS ========== */
@@ -264,4 +273,5 @@ input:focus, textarea:focus {
   border: 2px solid #4285F4;
   outline: none;
   background-color: #fff;
+  font-family: 'Georgia', serif;
 }
