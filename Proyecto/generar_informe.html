@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generar Informe</title>
+    <!-- Fuente Roboto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- CSS común para todas las páginas -->
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="generar_informe.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- EmailJS para envío de correos -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Script para el menú de usuario -->
+    <script src="user-menu.js"></script>
+    <script type="text/javascript">
+        (function() {
+            // Inicializar EmailJS con tu clave pública
+            // NOTA: Deberás registrarte en EmailJS (https://www.emailjs.com/) y reemplazar esta clave
+            emailjs.init("TU_CLAVE_PUBLICA_EMAILJS");
+        })();
+    </script>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo">
+                <div class="logo-icon">EC</div>
+                Generar Informe
+            </div>
+        </div>
+        <div class="user-menu">
+            <div class="user-icon">U</div>
+            <div class="user-dropdown">
+                <a href="#" class="user-dropdown-item">
+                    <i class="fas fa-user"></i> Mi Perfil
+                </a>
+                <a href="#" class="user-dropdown-item">
+                    <i class="fas fa-cog"></i> Configuración
+                </a>
+                <a href="Index.html" class="user-dropdown-item logout">
+                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                </a>
+            </div>
+        </div>
+    </header>
+    <div class="contenedor-principal">
+  <div class="menu-lateral">
+    <ul>
+      <li><a href="seccion_iniciada.html" onclick="mostrarSeccion('planear')">✏️Planear auditoría</a></li>
+      <li><a href="mis_auditorias.html" onclick="mostrarSeccion('mis')">💻Mis Auditorias</a></li>
+      <li><a href="tablero.html">📊Generar Tablero</a></li>
+    </ul>
+  </div>
+
+  <div class="contenedor-formulario">
+  <!-- Primera fila -->
+  <div class="fila-superior">
+    <div class="campo">
+      <label for="proceso">Procesos</label>
+      <input type="text" id="proceso" placeholder="Escribe el proceso de la auditoría">
+    </div>
+    <div class="campo">
+      <label for="auditoria">No. Auditoría</label>
+      <input type="text" id="auditoria" placeholder="Número Auditoría">
+    </div>
+    <div class="campo">
+      <label for="ciclo">Ciclo</label>
+      <input type="text" id="ciclo" placeholder="Número de ciclo">
+    </div>
+  </div>
+
+  <!-- Tareas -->
+  <div class="tarea">
+    <div class="campo">
+      <label>Número de tarea</label>
+      <input type="number" class="numero-tarea">
+    </div>
+    <div class="campo">
+      <label>Compromisos y tareas</label>
+      <input type="text" class="compromiso" placeholder="Nombre de la tarea">
+    </div>
+    <div class="campo">
+      <label>Fecha límite</label>
+      <input type="datetime-local" class="fecha">
+    </div>
+    <div class="campo">
+      <label>Responsable de la tarea</label>
+      <input type="text" class="responsable" placeholder="Responsable">
+    </div>
+  </div>
+
+  <!-- Textareas -->
+  <div class="campo-formulario">
+    <label for="aspectos">Aspectos auditados</label>
+    <textarea id="aspectos" maxlength="5000" placeholder="Escribe 5,000 caracteres máximo"></textarea>
+  </div>
+
+  <div class="campo-formulario">
+    <label for="resultados">Resultados de la auditoría</label>
+    <textarea id="resultados" maxlength="5000" placeholder="Escribe 5,000 caracteres máximo"></textarea>
+  </div>
+
+  <div class="campo-formulario">
+    <label for="puntos">Puntos relevantes</label>
+    <textarea id="puntos" maxlength="5000" placeholder="Escribe 5,000 caracteres máximo"></textarea>
+  </div>
+
+  <!-- Sección para enviar correo -->
+  <div class="campo-formulario" id="seccion-correo">
+    <h3>Enviar informe por correo</h3>
+    <div class="campo">
+      <label for="destinatarios">Destinatarios (separados por coma)</label>
+      <div class="input-with-button">
+        <input type="text" id="destinatarios" placeholder="ejemplo@correo.com, ejemplo2@correo.com">
+        <button type="button" id="btn-ver-correos">Ver correos</button>
+      </div>
+    </div>
+    <div class="campo">
+      <label for="asunto">Asunto del correo</label>
+      <input type="text" id="asunto" placeholder="Informe de Auditoría" value="Informe de Auditoría">
+    </div>
+    <div class="campo">
+      <label for="mensaje">Mensaje</label>
+      <textarea id="mensaje" rows="4" placeholder="Mensaje que acompañará al informe">Adjunto encontrará el informe de la auditoría realizada. Por favor revisar y confirmar recepción.</textarea>
+    </div>
+  </div>
+  
+  <!-- Modal para mostrar correos registrados -->
+  <div id="modal-correos" class="modal-correos">
+    <div class="modal-correos-contenido">
+      <span class="cerrar-modal-correos">&times;</span>
+      <h3>Correos registrados</h3>
+      <div class="lista-correos" id="lista-correos">
+        <!-- Aquí se cargarán los correos dinámicamente -->
+      </div>
+      <div class="campo">
+        <label for="nuevo-correo">Agregar nuevo correo</label>
+        <div class="input-with-button">
+          <input type="email" id="nuevo-correo" placeholder="Ingrese un correo electrónico">
+          <button type="button" id="btn-agregar-correo">Agregar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sección para incluir tablero -->
+  <div class="seccion-tablero">
+    <h3>Tablero de Indicadores</h3>
+    <div class="campo-checkbox">
+      <input type="checkbox" id="incluir-tablero" name="incluir-tablero">
+      <label for="incluir-tablero">Incluir tablero de indicadores en el informe</label>
+    </div>
+    <div id="tablero-preview" class="tablero-preview oculto">
+      <div class="tablero-info">
+        <p><strong>Tablero guardado:</strong> <span id="tablero-fecha">No hay tablero guardado</span></p>
+        <p><strong>Cumplimiento:</strong> <span id="tablero-cumplimiento">-</span></p>
+        <p><strong>Efectividad:</strong> <span id="tablero-efectividad">-</span></p>
+        <p><strong>Estado:</strong> <span id="tablero-estado">-</span></p>
+      </div>
+      <button type="button" id="btn-ir-tablero" class="btn-secundario">Ir a crear tablero</button>
+    </div>
+  </div>
+  
+  <!-- Contenedor para los botones -->
+  <div class="botones-contenedor">
+    <div class="añadir">
+      <button id="btn-anadir" onclick="añadirTarea()">Añadir más tareas</button>
+    </div>
+    <div class="botones">
+      <button id="btn-generar">Generar Informe</button>
+      <button id="btn-enviar">Generar y Enviar</button>
+      <button id="btn-limpiar">Limpiar</button>
+    </div>
+  </div>
+</div>
+</body>
+<script>
+  
+  function añadirTarea() {
+  const tarea = document.querySelector('.tarea');
+  const nuevaTarea = tarea.cloneNode(true);
+
+  // Limpiar los valores de los inputs clonados
+  nuevaTarea.querySelectorAll('input').forEach(input => input.value = '');
+
+  document.querySelector('.contenedor-formulario').insertBefore(nuevaTarea, document.querySelector('.botones-contenedor'));
+}
+
+document.getElementById('btn-limpiar').addEventListener('click', function () {
+  // Limpiar todos los campos de texto y textarea
+  document.querySelectorAll('input[type="text"], input[type="number"], input[type="datetime-local"], textarea').forEach(input => {
+    input.value = '';
+  });
+  
+  // Mantener solo la primera tarea y eliminar las demás
+  const tareas = document.querySelectorAll('.tarea');
+  if (tareas.length > 1) {
+    // Guardar la primera tarea
+    const primeraTarea = tareas[0];
+    
+    // Limpiar los valores de la primera tarea
+    primeraTarea.querySelectorAll('input').forEach(input => {
+      input.value = '';
+    });
+    
+    // Eliminar todas las tareas adicionales
+    for (let i = 1; i < tareas.length; i++) {
+      tareas[i].remove();
+    }
+  }
+  
+  // Limpiar también los campos de correo
+  document.getElementById('destinatarios').value = '';
+  document.getElementById('asunto').value = 'Informe de Auditoría';
+  document.getElementById('mensaje').value = 'Adjunto encontrará el informe de la auditoría realizada. Por favor revisar y confirmar recepción.';
+  
+  alert('Formulario limpiado correctamente');
+});
+
+// Manejar el checkbox de incluir tablero
+document.getElementById('incluir-tablero').addEventListener('change', function() {
+  const tableroPreview = document.getElementById('tablero-preview');
+  if (this.checked) {
+    // Mostrar la vista previa del tablero
+    tableroPreview.classList.remove('oculto');
+    
+    // Cargar datos del tablero guardado
+    const tableroData = JSON.parse(localStorage.getItem('tableroParaInforme') || '{}');
+    if (tableroData.puntuacion) {
+      document.getElementById('tablero-fecha').textContent = new Date(tableroData.fechaCreacion).toLocaleString();
+      document.getElementById('tablero-cumplimiento').textContent = tableroData.puntuacion + '%';
+      document.getElementById('tablero-efectividad').textContent = tableroData.efectividad + '%';
+      document.getElementById('tablero-estado').textContent = tableroData.estado;
+    } else {
+      document.getElementById('tablero-fecha').textContent = 'No hay tablero guardado';
+    }
+  } else {
+    // Ocultar la vista previa
+    tableroPreview.classList.add('oculto');
+  }
+});
+
+// Botón para ir a crear un tablero
+document.getElementById('btn-ir-tablero').addEventListener('click', function() {
+  window.location.href = 'tablero.html';
+});
+
+// Verificar si hay un tablero guardado al cargar la página
+document.addEventListener('DOMContentLoaded', function() {
+  const tableroData = JSON.parse(localStorage.getItem('tableroParaInforme') || '{}');
+  if (tableroData.puntuacion) {
+    document.getElementById('tablero-fecha').textContent = new Date(tableroData.fechaCreacion).toLocaleString();
+    document.getElementById('tablero-cumplimiento').textContent = tableroData.puntuacion + '%';
+    document.getElementById('tablero-efectividad').textContent = tableroData.efectividad + '%';
+    document.getElementById('tablero-estado').textContent = tableroData.estado;
+  }
+  
+  // Configurar contadores de caracteres para campos con límite
+  const camposConLimite = ['aspectos', 'resultados', 'puntos'];
+  
+  camposConLimite.forEach(campoId => {
+    const campo = document.getElementById(campoId);
+    
+    // Crear contador de caracteres
+    const contador = document.createElement('div');
+    contador.className = 'contador-caracteres';
+    contador.id = `contador-${campoId}`;
+    contador.textContent = `0/5000 caracteres`;
+    
+    // Insertar contador después del campo
+    campo.parentNode.insertBefore(contador, campo.nextSibling);
+    
+    // Actualizar contador en tiempo real
+    campo.addEventListener('input', function() {
+      const longitud = this.value.length;
+      contador.textContent = `${longitud}/5000 caracteres`;
+      
+      // Resaltar contador si excede el límite
+      if (longitud > 5000) {
+        contador.classList.add('contador-excedido');
+        this.classList.add('campo-error');
+      } else {
+        contador.classList.remove('contador-excedido');
+        this.classList.remove('campo-error');
+      }
+    });
+  });
+});
+
+// Función para validar todos los campos del formulario
+function validarFormulario(enviarPorCorreo = false) {
+  // Campos obligatorios
+  const camposObligatorios = [
+    { id: 'proceso', nombre: 'Procesos' },
+    { id: 'auditoria', nombre: 'No. Auditoría' },
+    { id: 'ciclo', nombre: 'Ciclo' },
+    { id: 'aspectos', nombre: 'Aspectos auditados' },
+    { id: 'resultados', nombre: 'Resultados de la auditoría' },
+    { id: 'puntos', nombre: 'Puntos relevantes' }
+  ];
+  
+  // Validar campos obligatorios
+  let camposVacios = [];
+  for (const campo of camposObligatorios) {
+    const elemento = document.getElementById(campo.id);
+    if (!elemento.value.trim()) {
+      camposVacios.push(campo.nombre);
+      // Resaltar campo vacío
+      elemento.classList.add('campo-error');
+    } else {
+      elemento.classList.remove('campo-error');
+    }
+  }
+  
+  // Validar al menos una tarea
+  const tareas = document.querySelectorAll('.tarea');
+  let tareasValidas = true;
+  
+  tareas.forEach(tarea => {
+    const numeroTarea = tarea.querySelector('.numero-tarea');
+    const compromiso = tarea.querySelector('.compromiso');
+    const fecha = tarea.querySelector('.fecha');
+    const responsable = tarea.querySelector('.responsable');
+    
+    // Verificar que los campos de la tarea estén completos
+    if (!numeroTarea.value || !compromiso.value || !fecha.value || !responsable.value) {
+      tareasValidas = false;
+      // Resaltar campos vacíos
+      if (!numeroTarea.value) numeroTarea.classList.add('campo-error');
+      if (!compromiso.value) compromiso.classList.add('campo-error');
+      if (!fecha.value) fecha.classList.add('campo-error');
+      if (!responsable.value) responsable.classList.add('campo-error');
+    } else {
+      numeroTarea.classList.remove('campo-error');
+      compromiso.classList.remove('campo-error');
+      fecha.classList.remove('campo-error');
+      responsable.classList.remove('campo-error');
+    }
+  });
+  
+  if (!tareasValidas) {
+    camposVacios.push('Todos los campos de las tareas');
+  }
+  
+  // Validar campos con límite de caracteres (5000)
+  const camposConLimite = [
+    { id: 'aspectos', nombre: 'Aspectos auditados' },
+    { id: 'resultados', nombre: 'Resultados de la auditoría' },
+    { id: 'puntos', nombre: 'Puntos relevantes' }
+  ];
+  
+  let camposSobrepasados = [];
+  for (const campo of camposConLimite) {
+    const elemento = document.getElementById(campo.id);
+    const longitud = elemento.value.trim().length;
+    
+    if (longitud > 5000) {
+      camposSobrepasados.push(`${campo.nombre} (${longitud}/5000)`);
+      // Resaltar campo que excede el límite
+      elemento.classList.add('campo-error');
+    }
+  }
+  
+  // Validar campos de correo si se va a enviar por correo
+  if (enviarPorCorreo) {
+    const destinatarios = document.getElementById('destinatarios');
+    const asunto = document.getElementById('asunto');
+    const mensaje = document.getElementById('mensaje');
+    
+    if (!destinatarios.value.trim()) {
+      camposVacios.push('Destinatarios');
+      destinatarios.classList.add('campo-error');
+    } else {
+      destinatarios.classList.remove('campo-error');
+    }
+    
+    if (!asunto.value.trim()) {
+      camposVacios.push('Asunto del correo');
+      asunto.classList.add('campo-error');
+    } else {
+      asunto.classList.remove('campo-error');
+    }
+    
+    if (!mensaje.value.trim()) {
+      camposVacios.push('Mensaje del correo');
+      mensaje.classList.add('campo-error');
+    } else {
+      mensaje.classList.remove('campo-error');
+    }
+  }
+  
+  // Mostrar mensajes de error si es necesario
+  if (camposVacios.length > 0) {
+    alert(`Por favor complete los siguientes campos obligatorios:\n\n${camposVacios.join('\n')}`);
+    return false;
+  }
+  
+  if (camposSobrepasados.length > 0) {
+    alert(`Los siguientes campos exceden el límite de 5000 caracteres:\n\n${camposSobrepasados.join('\n')}`);
+    return false;
+  }
+  
+  return true;
+}
+
+const { jsPDF } = window.jspdf;
+document.getElementById("btn-generar").addEventListener("click", function() {
+  if (validarFormulario(false)) {
+    generarFormularioAuditoria(false);
+  }
+});
+
+document.getElementById("btn-enviar").addEventListener("click", function() {
+  if (validarFormulario(true)) {
+    generarFormularioAuditoria(true);
+  }
+});
+
+// Función para generar el PDF y opcionalmente enviarlo por correo
+function generarFormularioAuditoria(enviarPorCorreo = false) {
+  const doc = new jsPDF();
+  let y = 10;
+
+  doc.setFontSize(16);
+  doc.text("Formulario de Auditoría", 70, y);
+  y += 10;
+  doc.setFontSize(10);
+  
+  // Verificar si se debe incluir el tablero
+  const incluirTablero = document.getElementById('incluir-tablero').checked;
+  let tableroData = null;
+  
+  if (incluirTablero) {
+    tableroData = JSON.parse(localStorage.getItem('tableroParaInforme') || '{}');
+    if (!tableroData.puntuacion) {
+      alert('No hay datos de tablero guardados. El informe se generará sin el tablero.');
+    }
+  }
+
+  // Datos generales
+  const proceso = document.getElementById("proceso").value;
+  const auditoria = document.getElementById("auditoria").value;
+  const ciclo = document.getElementById("ciclo").value;
+
+  y = agregarCampo(doc, "Procesos", proceso, y);
+  y = agregarCampo(doc, "No. Auditoría", auditoria, y);
+  y = agregarCampo(doc, "Ciclo", ciclo, y);
+
+  // Recorremos múltiples tareas por clase
+  const tareas = document.querySelectorAll(".tarea");
+  tareas.forEach((tarea, index) => {
+    const numeroTarea = tarea.querySelector('.numero-tarea')?.value || "";
+    const compromiso = tarea.querySelector('.compromiso')?.value || "";
+    const fecha = tarea.querySelector('.fecha')?.value || "";
+    const responsable = tarea.querySelector('.responsable')?.value || "";
+
+    y += 5;
+    doc.text(`Tarea ${index + 1}`, 10, y);
+    y = agregarCampo(doc, "Número de tarea", numeroTarea, y);
+    y = agregarCampo(doc, "Compromisos y tareas", compromiso, y);
+    y = agregarCampo(doc, "Fecha límite", fecha, y);
+    y = agregarCampo(doc, "Responsable de la tarea", responsable, y);
+  });
+
+  // Textareas
+  const aspectos = document.getElementById("aspectos").value;
+  const resultados = document.getElementById("resultados").value;
+  const puntos = document.getElementById("puntos").value;
+
+  y = agregarAreaTexto(doc, "Aspectos auditados", aspectos, y);
+  y = agregarAreaTexto(doc, "Resultados de la auditoría", resultados, y);
+  y = agregarAreaTexto(doc, "Puntos relevantes", puntos, y);
+  
+  // Incluir tablero si está seleccionado y hay datos disponibles
+  if (incluirTablero && tableroData && tableroData.puntuacion) {
+    // Agregar una nueva página para el tablero
+    doc.addPage();
+    y = 10;
+    
+    // Título del tablero
+    doc.setFontSize(16);
+    doc.text("Tablero de Indicadores", 70, y);
+    y += 15;
+    doc.setFontSize(10);
+    
+    // Agregar información del tablero
+    doc.setFontSize(12);
+    doc.text("Indicadores de Efectividad", 10, y);
+    y += 10;
+    doc.setFontSize(10);
+    
+    // Agregar KPIs
+    doc.text(`Cumplimiento: ${tableroData.puntuacion}%`, 15, y);
+    y += 7;
+    doc.text(`Nivel de Madurez: ${tableroData.nivelMadurez}`, 15, y);
+    y += 7;
+    doc.text(`Efectividad: ${tableroData.efectividad}%`, 15, y);
+    y += 7;
+    doc.text(`Estado General: ${tableroData.estado}`, 15, y);
+    y += 15;
+    
+    // Agregar imágenes de gráficos si están disponibles
+    if (tableroData.imgCumplimiento) {
+      doc.text("Gráfico de Cumplimiento", 10, y);
+      y += 7;
+      try {
+        doc.addImage(tableroData.imgCumplimiento, 'PNG', 15, y, 80, 80);
+      } catch (e) {
+        console.error('Error al agregar imagen de cumplimiento:', e);
+      }
+      
+      if (tableroData.imgRiesgos) {
+        doc.text("Gráfico de Distribución de Riesgos", 110, y);
+        y += 7;
+        try {
+          doc.addImage(tableroData.imgRiesgos, 'PNG', 110, y, 80, 80);
+        } catch (e) {
+          console.error('Error al agregar imagen de riesgos:', e);
+        }
+      }
+      
+      y += 90;
+    }
+    
+    // Agregar observaciones si están disponibles
+    if (tableroData.observaciones) {
+      doc.text("Observaciones del Tablero:", 10, y);
+      y += 7;
+      
+      // Dividir observaciones en líneas para que quepan en la página
+      const observacionesTexto = tableroData.observaciones.replace(/<[^>]*>/g, '');
+      const lineas = doc.splitTextToSize(observacionesTexto, 180);
+      doc.text(lineas, 15, y);
+    }
+  }
+
+  // Nombre del archivo
+  const nombreArchivo = `Informe_Auditoria_${proceso.replace(/\s+/g, '_')}_${auditoria}.pdf`;
+  
+  // Si no se va a enviar por correo, solo guardar el PDF
+  if (!enviarPorCorreo) {
+    doc.save(nombreArchivo);
+    return;
+  }
+  
+  // Si se va a enviar por correo, obtener los datos del formulario
+  const destinatarios = document.getElementById("destinatarios").value;
+  const asunto = document.getElementById("asunto").value;
+  const mensaje = document.getElementById("mensaje").value;
+  
+  // Validar que haya al menos un destinatario
+  if (!destinatarios) {
+    alert("Por favor, ingresa al menos un destinatario de correo");
+    return;
+  }
+  
+  // Convertir el PDF a base64 para adjuntarlo al correo
+  const pdfBase64 = doc.output('datauristring');
+  
+  // Mostrar indicador de carga
+  const btnEnviar = document.getElementById("btn-enviar");
+  const textoOriginal = btnEnviar.textContent;
+  btnEnviar.textContent = "Enviando...";
+  btnEnviar.disabled = true;
+  
+  // Enviar el correo usando EmailJS
+  enviarCorreoConAdjunto(destinatarios, asunto, mensaje, nombreArchivo, pdfBase64)
+    .then(function(response) {
+      alert("Correo enviado correctamente");
+      console.log("SUCCESS!", response.status, response.text);
+    })
+    .catch(function(error) {
+      alert("Error al enviar el correo: " + error.message);
+      console.log("FAILED...", error);
+    })
+    .finally(function() {
+      // Restaurar el botón
+      btnEnviar.textContent = textoOriginal;
+      btnEnviar.disabled = false;
+      
+      // Guardar el PDF localmente también
+      doc.save(nombreArchivo);
+    });
+}
+
+function agregarCampo(doc, label, valor, y) {
+  doc.text(`${label}:`, 10, y);
+  doc.text(valor || "-", 60, y);
+  return y + 10;
+}
+
+function agregarAreaTexto(doc, label, valor, y) {
+  doc.text(`${label}:`, 10, y);
+  const lines = doc.splitTextToSize(valor || "-", 180);
+  doc.text(lines, 10, y + 5);
+  return y + lines.length * 5 + 5;
+}
+
+// Función para enviar correo con archivo adjunto usando EmailJS
+async function enviarCorreoConAdjunto(destinatarios, asunto, mensaje, nombreArchivo, pdfBase64) {
+  // Preparar los datos para EmailJS
+  const templateParams = {
+    to_email: destinatarios,
+    from_name: 'Sistema de Gestión de Auditorías - El Comité',
+    subject: asunto,
+    message: mensaje,
+    file_name: nombreArchivo,
+    file_data: pdfBase64
+  };
+  
+  // Guardar el correo en el historial de correos enviados
+  guardarCorreoEnviado(destinatarios);
+  
+  // Enviar el correo usando EmailJS
+  // NOTA: Debes crear una plantilla en EmailJS que soporte archivos adjuntos
+  // y reemplazar 'service_id' y 'template_id' con tus propios IDs
+  return emailjs.send('service_id', 'template_id', templateParams);
+}
+
+// Función para guardar un correo en localStorage
+function guardarCorreoEnviado(correos) {
+  // Dividir los correos si hay múltiples (separados por coma)
+  const listaCorreos = correos.split(',').map(c => c.trim()).filter(c => c !== '');
+  
+  // Obtener correos guardados o inicializar array
+  let correosGuardados = JSON.parse(localStorage.getItem('correosRegistrados')) || [];
+  
+  // Agregar nuevos correos si no existen ya
+  listaCorreos.forEach(correo => {
+    if (!correosGuardados.includes(correo)) {
+      correosGuardados.push(correo);
+    }
+  });
+  
+  // Guardar en localStorage
+  localStorage.setItem('correosRegistrados', JSON.stringify(correosGuardados));
+}
+
+// Función para cargar y mostrar los correos registrados
+function cargarCorreosRegistrados() {
+  const listaCorreos = document.getElementById('lista-correos');
+  listaCorreos.innerHTML = ''; // Limpiar lista
+  
+  // Obtener correos guardados
+  const correosGuardados = JSON.parse(localStorage.getItem('correosRegistrados')) || [];
+  
+  // Si no hay correos, mostrar mensaje
+  if (correosGuardados.length === 0) {
+    listaCorreos.innerHTML = '<p class="no-correos">No hay correos registrados</p>';
+    return;
+  }
+  
+  // Crear elementos para cada correo
+  correosGuardados.forEach(correo => {
+    const correoItem = document.createElement('div');
+    correoItem.className = 'correo-item';
+    
+    const correoTexto = document.createElement('div');
+    correoTexto.className = 'correo-texto';
+    correoTexto.textContent = correo;
+    
+    const correoAcciones = document.createElement('div');
+    correoAcciones.className = 'correo-acciones';
+    
+    const btnUsar = document.createElement('button');
+    btnUsar.className = 'btn-usar';
+    btnUsar.textContent = 'Usar';
+    btnUsar.onclick = function() {
+      usarCorreo(correo);
+    };
+    
+    const btnEliminar = document.createElement('button');
+    btnEliminar.className = 'btn-eliminar';
+    btnEliminar.textContent = 'Eliminar';
+    btnEliminar.onclick = function() {
+      eliminarCorreo(correo);
+    };
+    
+    correoAcciones.appendChild(btnUsar);
+    correoAcciones.appendChild(btnEliminar);
+    
+    correoItem.appendChild(correoTexto);
+    correoItem.appendChild(correoAcciones);
+    
+    listaCorreos.appendChild(correoItem);
+  });
+}
+
+// Función para usar un correo (agregarlo al campo de destinatarios)
+function usarCorreo(correo) {
+  const destinatarios = document.getElementById('destinatarios');
+  const correosActuales = destinatarios.value.trim();
+  
+  if (correosActuales === '') {
+    destinatarios.value = correo;
+  } else {
+    // Verificar si el correo ya está en la lista
+    const listaCorreos = correosActuales.split(',').map(c => c.trim());
+    if (!listaCorreos.includes(correo)) {
+      destinatarios.value = correosActuales + ', ' + correo;
+    }
+  }
+  
+  // Cerrar el modal
+  document.getElementById('modal-correos').style.display = 'none';
+}
+
+// Función para eliminar un correo
+function eliminarCorreo(correo) {
+  if (confirm('¿Está seguro de eliminar este correo?')) {
+    // Obtener correos guardados
+    let correosGuardados = JSON.parse(localStorage.getItem('correosRegistrados')) || [];
+    
+    // Filtrar para eliminar el correo
+    correosGuardados = correosGuardados.filter(c => c !== correo);
+    
+    // Guardar en localStorage
+    localStorage.setItem('correosRegistrados', JSON.stringify(correosGuardados));
+    
+    // Recargar la lista
+    cargarCorreosRegistrados();
+  }
+}
+
+// Función para mostrar un modal de confirmación al enviar correo
+function mostrarModalConfirmacion(mensaje) {
+  // Crear elementos del modal
+  const modal = document.createElement('div');
+  modal.className = 'modal-confirmacion';
+  
+  const modalContenido = document.createElement('div');
+  modalContenido.className = 'modal-confirmacion-contenido';
+  
+  const mensajeElement = document.createElement('p');
+  mensajeElement.textContent = mensaje;
+  
+  const botonCerrar = document.createElement('button');
+  botonCerrar.textContent = 'Aceptar';
+  botonCerrar.onclick = function() {
+    document.body.removeChild(modal);
+  };
+  
+  // Construir el modal
+  modalContenido.appendChild(mensajeElement);
+  modalContenido.appendChild(botonCerrar);
+  modal.appendChild(modalContenido);
+  
+  // Agregar el modal al body
+  document.body.appendChild(modal);
+}
+
+// Eventos para el modal de correos
+document.addEventListener('DOMContentLoaded', function() {
+  // Botón para ver correos registrados
+  document.getElementById('btn-ver-correos').addEventListener('click', function() {
+    const modalCorreos = document.getElementById('modal-correos');
+    modalCorreos.style.display = 'block';
+    cargarCorreosRegistrados();
+  });
+  
+  // Botón para cerrar el modal de correos
+  document.querySelector('.cerrar-modal-correos').addEventListener('click', function() {
+    document.getElementById('modal-correos').style.display = 'none';
+  });
+  
+  // Cerrar el modal al hacer clic fuera del contenido
+  window.addEventListener('click', function(e) {
+    const modalCorreos = document.getElementById('modal-correos');
+    if (e.target === modalCorreos) {
+      modalCorreos.style.display = 'none';
+    }
+  });
+  
+  // Botón para agregar un nuevo correo
+  document.getElementById('btn-agregar-correo').addEventListener('click', function() {
+    agregarNuevoCorreo();
+  });
+  
+  // Permitir agregar correo con Enter
+  document.getElementById('nuevo-correo').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      agregarNuevoCorreo();
+    }
+  });
+});
+
+// Función para agregar un nuevo correo a la lista
+function agregarNuevoCorreo() {
+  const nuevoCorreo = document.getElementById('nuevo-correo').value.trim();
+  
+  // Validar formato de correo electrónico
+  if (!validarFormatoCorreo(nuevoCorreo)) {
+    alert('Por favor ingrese un correo electrónico válido');
+    return;
+  }
+  
+  // Obtener correos guardados
+  let correosGuardados = JSON.parse(localStorage.getItem('correosRegistrados')) || [];
+  
+  // Verificar si el correo ya existe
+  if (correosGuardados.includes(nuevoCorreo)) {
+    alert('Este correo ya está registrado');
+    return;
+  }
+  
+  // Agregar el nuevo correo
+  correosGuardados.push(nuevoCorreo);
+  
+  // Guardar en localStorage
+  localStorage.setItem('correosRegistrados', JSON.stringify(correosGuardados));
+  
+  // Limpiar el campo
+  document.getElementById('nuevo-correo').value = '';
+  
+  // Recargar la lista
+  cargarCorreosRegistrados();
+  
+  // Mostrar mensaje de éxito
+  alert('Correo agregado correctamente');
+}
+
+// Función para validar formato de correo electrónico
+function validarFormatoCorreo(correo) {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(correo);
+}
+</script>
+</html>
