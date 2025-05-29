@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Mis Auditorias</title>
-    <link rel="stylesheet" href="mis_auditorias.css ">
-    <script src="api.js"></script>
+    <link rel="stylesheet" href="/Proyecto/mis_auditorias.css">
+    <script src="/Proyecto/api.js"></script>
 </head>
 <body>
   <header>
@@ -12,17 +12,16 @@
   </header>
   <div class="container">
     <nav class="sidebar">
-      <a href="seccion_iniciada.html" onclick="mostrarSeccion('planear')">✏️ Planear auditoría</a>
-      <a href="mis_auditorias.html" onclick="mostrarSeccion('mis')">💻 Mis auditorías</a>
-      <a href="tablero.html">📊 Generar Tablero</a>
-
+      <a href="/Proyecto/seccion_iniciada.html">✏️ Planear auditoría</a>
+      <a href="/Proyecto/mis_auditorias.html">💻 Mis auditorías</a>
+      <a href="/Proyecto/tablero.html">📊 Generar Tablero</a>
     </nav>
     <main>
       <div class="top-bar">
         <h2>Mis auditorías</h2>        <div class="search-bar">
           <input type="text" id="searchInput" placeholder="Buscar por nombre" onkeyup="filterAudits()" />
         </div>
-        <a href="seccion_iniciada.html"><button class="plan-btn">Planear auditoría</button></a>
+        <a href="/Proyecto/seccion_iniciada.html"><button class="plan-btn">Planear auditoría</button></a>
       </div>
 
       <table>
@@ -46,9 +45,7 @@
 
     // Verificar autenticación al cargar la página
     window.addEventListener('DOMContentLoaded', async () => {
-      const currentUser = getCurrentUser();
-      if (!currentUser) {
-        window.location.href = 'Index.html';
+      if (!requireAuth()) {
         return;
       }
       
@@ -58,12 +55,23 @@
     // Cargar auditorías desde el backend
     async function loadAudits() {
       try {
-        const audits = await api.audits.getAll();
-        allAudits = audits;
-        displayAudits(audits);
+        console.log('Cargando auditorías...');
+        const response = await api.audits.getAll();
+        console.log('Respuesta del servidor:', response);
+        
+        if (response.success && response.data) {
+          allAudits = response.data;
+          displayAudits(response.data);
+        } else {
+          console.error('Error en la respuesta:', response);
+          allAudits = [];
+          displayAudits([]);
+        }
       } catch (error) {
         console.error('Error al cargar auditorías:', error);
-        alert('Error al cargar las auditorías');
+        alert('Error al cargar las auditorías: ' + error.message);
+        allAudits = [];
+        displayAudits([]);
       }
     }
 
@@ -71,7 +79,7 @@
     function displayAudits(audits) {
       const tableBody = document.getElementById('auditsTableBody');
       
-      if (audits.length === 0) {
+      if (!audits || audits.length === 0) {
         tableBody.innerHTML = `
           <tr>
             <td colspan="4" style="text-align: center; color: #666;">
@@ -84,9 +92,11 @@
 
       tableBody.innerHTML = audits.map(audit => `
         <tr>
-          <td>${audit.name}</td>
-          <td>${new Date(audit.planned_date).toLocaleDateString('es-ES')}</td>
-          <td>${audit.User ? audit.User.name : 'N/A'}</td>
+          <td>${audit.name || audit.process || 'Sin nombre'}</td>
+          <td>${audit.planned_date ? new Date(audit.planned_date).toLocaleDateString('es-ES') : 
+                audit.auditDate ? new Date(audit.auditDate).toLocaleDateString('es-ES') : 'Sin fecha'}</td>
+          <td>${audit.auditor ? audit.auditor.fullName : 
+                audit.User ? audit.User.fullName || audit.User.name : 'N/A'}</td>
           <td>
             <button class="report-btn" onclick="generateReport(${audit.id})">
               Generar Informe

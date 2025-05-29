@@ -22,12 +22,24 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middlewares
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:5000', 'http://localhost:5173'],
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Middleware para logear todas las peticiones
+app.use((req, res, next) => {
+  console.log(`🌐 ${req.method} ${req.url}`);
+  next();
+});
+
 // Servir archivos estáticos del frontend
 app.use(express.static(path.join(__dirname, '../frontend')));
+
+// Servir específicamente la carpeta Proyecto
+app.use('/Proyecto', express.static(path.join(__dirname, '../frontend/Proyecto')));
 
 // Rutas de la API
 app.use('/api/auth', authRoutes);
@@ -38,6 +50,23 @@ app.use('/api/dashboard', dashboardRoutes);
 // Ruta para servir el frontend
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/Proyecto/Index.html'));
+});
+
+// Servir todas las páginas HTML del proyecto
+app.get('/Proyecto/:page', (req, res) => {
+  const page = req.params.page;
+  console.log(`📄 Solicitando página: ${page}`);
+  const filePath = path.join(__dirname, '../frontend/Proyecto', page);
+  console.log(`📂 Ruta del archivo: ${filePath}`);
+  
+  res.sendFile(filePath, (err) => {
+    if (err) {
+      console.error(`❌ Error sirviendo ${page}:`, err);
+      res.status(404).json({ error: 'Página no encontrada' });
+    } else {
+      console.log(`✅ Página ${page} servida correctamente`);
+    }
+  });
 });
 
 // Manejo de errores

@@ -6,15 +6,18 @@ const router = express.Router();
 // Login
 router.post('/login', async (req, res) => {
   try {
+    console.log('📝 Intento de login recibido:', req.body);
     const { username, password } = req.body;
 
     if (!username || !password) {
+      console.log('❌ Campos faltantes');
       return res.status(400).json({ 
         success: false, 
         message: 'Usuario y contraseña son requeridos' 
       });
     }
 
+    console.log('🔍 Buscando usuario:', username);
     const user = await User.findOne({ 
       where: { 
         username,
@@ -22,13 +25,23 @@ router.post('/login', async (req, res) => {
       } 
     });
 
-    if (!user || user.password !== password) {
+    if (!user) {
+      console.log('❌ Usuario no encontrado:', username);
       return res.status(401).json({ 
         success: false, 
         message: 'Usuario o contraseña incorrectos' 
       });
     }
 
+    if (user.password !== password) {
+      console.log('❌ Contraseña incorrecta para usuario:', username);
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Usuario o contraseña incorrectos' 
+      });
+    }
+
+    console.log('✅ Login exitoso para usuario:', username);
     // En producción, aquí generarías un JWT token
     res.json({
       success: true,
@@ -43,7 +56,7 @@ router.post('/login', async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error en login:', error);
+    console.error('💥 Error en login:', error);
     res.status(500).json({ 
       success: false, 
       message: 'Error interno del servidor' 

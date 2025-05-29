@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>El Comité - Login</title>
-  <link rel="stylesheet" href="Index.css"> <!-- Tu hoja de estilos -->
+  <link rel="stylesheet" href="/Proyecto/Index.css">
+  <script src="/Proyecto/api.js"></script>
 </head>
 <body>
   <div class="background">
@@ -39,23 +40,12 @@
       }
 
       try {
-        const response = await fetch('/api/auth/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            username: usuario,
-            password: contrasena
-          })
-        });
-
-        const data = await response.json();
+        const data = await api.auth.login(usuario, contrasena);
 
         if (data.success) {
           // Guardar información del usuario en localStorage
           localStorage.setItem('user', JSON.stringify(data.user));
-          window.location.href = "seccion_iniciada.html";
+          window.location.href = "/Proyecto/seccion_iniciada.html";
         } else {
           alert(data.message || "Usuario o contraseña incorrectos.");
         }

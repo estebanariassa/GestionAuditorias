@@ -1,6 +1,6 @@
 // API Configuration
 // Cambia el puerto aquí si el backend está en otro puerto
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = 'http://localhost:5000';
 
 // Utility function to get user from localStorage
 function getCurrentUser() {
@@ -132,6 +132,14 @@ const dashboardAPI = {
   }
 };
 
+// Main API object that groups all APIs
+const api = {
+  auth: authAPI,
+  audits: auditsAPI,
+  users: usersAPI,
+  dashboard: dashboardAPI
+};
+
 // Utility functions for common operations
 
 // Format date for display
@@ -211,7 +219,7 @@ function showSuccess(message, container = null) {
 function requireAuth() {
   if (!isLoggedIn()) {
     alert('Debe iniciar sesión para acceder a esta página.');
-    window.location.href = 'Index.html';
+    window.location.href = '/Proyecto/Index.html';
     return false;
   }
   return true;
@@ -221,11 +229,11 @@ function requireAuth() {
 function logout() {
   authAPI.logout().then(() => {
     localStorage.removeItem('user');
-    window.location.href = 'Index.html';
+    window.location.href = '/Proyecto/Index.html';
   }).catch(error => {
     console.error('Error during logout:', error);
     // Force logout even if API call fails
     localStorage.removeItem('user');
-    window.location.href = 'Index.html';
+    window.location.href = '/Proyecto/Index.html';
   });
 }
