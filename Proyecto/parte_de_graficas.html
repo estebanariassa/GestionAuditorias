@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indicadores de Auditoría - El Comité</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- CSS común para todas las páginas -->
+    <link rel="stylesheet" href="common.css">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Script para el menú de usuario -->
+    <script src="user-menu.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 20px;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+        th, td {
+            border: 1px solid #cccccc;
+            padding: 8px 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        input[type="number"] {
+            width: 60px;
+        }
+        #graficoEfectividad {
+            max-width: 800px;
+            margin: 30px auto;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo">
+                <div class="logo-icon">EC</div>
+                Indicadores de Auditoría
+            </div>
+        </div>
+        <div class="user-menu">
+            <div class="user-icon">U</div>
+            <div class="user-dropdown">
+                <a href="#" class="user-dropdown-item">
+                    <i class="fas fa-user"></i> Mi Perfil
+                </a>
+                <a href="#" class="user-dropdown-item">
+                    <i class="fas fa-cog"></i> Configuración
+                </a>
+                <a href="Index.html" class="user-dropdown-item logout">
+                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <h1>Plan de Auditorías - Indicadores de Efectividad</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Objetivo de Auditoría</th>
+                <th>Efectividad (%)</th>
+            </tr>
+        </thead>
+        <tbody id="tablaObjetivos">
+            <!-- Rellenado dinámicamente -->
+        </tbody>
+    </table>
+
+    <canvas id="graficoEfectividad"></canvas>
+
+    <script>
+        const objetivos = [
+            "Cumplimiento estándar Talento Humano",
+            "Gestión programa de capacitación",
+            "Selección y contratación institucional",
+            "Inducción y reinducción",
+            "Gestión de hojas de vida"
+        ];
+
+        const efectividades = [85, 90, 75, 80, 88];
+
+        const tabla = document.getElementById('tablaObjetivos');
+        const ctx = document.getElementById('graficoEfectividad').getContext('2d');
+
+        // Rellenar tabla con inputs
+        objetivos.forEach((objetivo, index) => {
+            const fila = document.createElement('tr');
+            fila.innerHTML = `
+                <td>${objetivo}</td>
+                <td><input type="number" min="0" max="100" value="${efectividades[index]}" data-index="${index}" onchange="actualizarValor(this)"></td>
+            `;
+            tabla.appendChild(fila);
+        });
+
+        // Crear el gráfico
+        const grafico = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: objetivos,
+                datasets: [{
+                    label: 'Efectividad (%)',
+                    data: efectividades,
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 99, 132, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Efectividad de Cumplimiento de los Propósitos de Auditoría'
+                    }
+                }
+            }
+        });
+
+        // Función para actualizar datos
+        function actualizarValor(input) {
+            const index = input.getAttribute('data-index');
+            const nuevoValor = parseInt(input.value) || 0; // Por si el input queda vacío
+
+            grafico.data.datasets[0].data[index] = nuevoValor;
+            grafico.update();
+        }
+    </script>
+
+</body>
+</html>

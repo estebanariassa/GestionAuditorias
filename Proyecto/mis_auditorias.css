@@ -1,0 +1,112 @@
+/* Estilo general del body */
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f4f4; /* Color de fondo suave */
+}
+
+/* Encabezado superior con el nombre del comité */
+header {
+  background-color: #4a8b1d; /* Verde institucional */
+  padding: 1rem;
+}
+
+/* Texto del logo dentro del header */
+.logo {
+  color: hsl(0, 0%, 0%);
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* Contenedor principal que envuelve sidebar y main */
+.container {
+  display: flex;
+  min-height: 100vh; /* Altura mínima de toda la pantalla */
+}
+
+/* Barra lateral (sidebar de navegación) */
+.sidebar {
+  width: 200px;
+  background-color: #fff;
+  padding: 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra suave al lado */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilos para los enlaces de navegación en la sidebar */
+.sidebar a {
+  padding: 0.75rem;
+  text-decoration: none;
+  color: hsl(0, 0%, 0%);
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+}
+
+/* Efecto hover para resaltar el enlace cuando el cursor pasa por encima */
+.sidebar a:hover {
+  background-color: #e0e0e0;
+}
+
+/* Área principal de contenido */
+main {
+  flex: 1;
+  padding: 2rem;
+}
+
+/* Barra superior con título, buscador y botón */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Estilo del campo de búsqueda */
+.search-bar input {
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-family: 'Georgia', serif;
+}
+
+/* Botón azul para "Planear auditoría" */
+.plan-btn {
+  background-color: #1e3a8a;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Georgia', serif;
+}
+
+/* Tabla con auditorías */
+table {
+  width: 100%;
+  margin-top: 2rem;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Estilo de encabezados y celdas de la tabla */
+th, td {
+  text-align: left;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Botón azul para "Generar Informe" en cada fila */
+.report-btn {
+  background-color: #1e3a8a;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Georgia', serif;
+}
+

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>El Comité - Inicio de Sesión</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- CSS común para todas las páginas -->
+  <link rel="stylesheet" href="common.css">
+  <link rel="stylesheet" href="Index.css">
+</head>
+<body>
+  <div class="background">
+    
+    <!-- Contenedor del Login -->
+    <div class="login-container">
+      <h2>Iniciar sesión</h2>
+      <form onsubmit="return validarLogin()">
+        <input type="text" id="usuario" placeholder="Usuario" required>
+        <input type="password" id="contrasena" placeholder="Contraseña" required>
+        <button type="submit">Continuar</button>
+      </form>
+      <p class="registro-link">¿No tienes cuenta? <a href="#" id="mostrarRegistro">Regístrate aquí</a></p>
+    </div>
+    
+    <!-- Modal de Registro -->
+    <div id="modalRegistro" class="modal">
+      <div class="modal-contenido">
+        <span class="cerrar-modal">&times;</span>
+        <h2>Crear nueva cuenta</h2>
+        <form id="formRegistro" onsubmit="return registrarUsuario()">
+          <input type="text" id="nuevoUsuario" placeholder="Nombre de usuario" required>
+          <input type="email" id="email" placeholder="Correo electrónico" required>
+          <input type="password" id="nuevaContrasena" placeholder="Contraseña" required>
+          <input type="password" id="confirmarContrasena" placeholder="Confirmar contraseña" required>
+          <select id="rolUsuario" required>
+            <option value="" disabled selected>Selecciona un rol</option>
+            <option value="auditor">Auditor</option>
+            <option value="auditado">Auditado</option>
+            <option value="admin">Administrador</option>
+          </select>
+          <button type="submit">Crear cuenta</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Título -->
+    <div class="head">
+      <h1>Gestión de Auditorías</h1>
+    </div>
+  </div>
+  <div class="footer">
+    <p>© 2025 El Comité. Todos los derechos reservados.</p>
+    
+
+  <!-- Validación con JavaScript -->
+  <script>
+    // Variables para el modal
+    const modal = document.getElementById('modalRegistro');
+    const btnMostrarRegistro = document.getElementById('mostrarRegistro');
+    const cerrarModal = document.querySelector('.cerrar-modal');
+    
+    // Mostrar el modal de registro
+    btnMostrarRegistro.addEventListener('click', function(e) {
+      e.preventDefault();
+      modal.style.display = 'block';
+    });
+    
+    // Cerrar el modal al hacer clic en la X
+    cerrarModal.addEventListener('click', function() {
+      modal.style.display = 'none';
+    });
+    
+    // Cerrar el modal al hacer clic fuera del contenido
+    window.addEventListener('click', function(e) {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    // Función para validar el inicio de sesión
+    function validarLogin() {
+      const usuario = document.getElementById("usuario").value;
+      const contrasena = document.getElementById("contrasena").value;
+
+      // Verificar si hay usuarios registrados en localStorage
+      const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+      const usuarioEncontrado = usuarios.find(u => u.usuario === usuario && u.contrasena === contrasena);
+      
+      if (usuarioEncontrado) {
+        // Guardar información del usuario en sesión
+        sessionStorage.setItem('usuarioActual', JSON.stringify({
+          usuario: usuarioEncontrado.usuario,
+          rol: usuarioEncontrado.rol,
+          email: usuarioEncontrado.email
+        }));
+        
+        window.location.href = "seccion_iniciada.html";
+        return false;
+      } 
+      // Mantener el usuario admin por defecto para pruebas
+      else if (usuario === "admin" && contrasena === "1234") {
+        sessionStorage.setItem('usuarioActual', JSON.stringify({
+          usuario: "admin",
+          rol: "admin",
+          email: "admin@elcomite.com"
+        }));
+        
+        window.location.href = "seccion_iniciada.html";
+        return false;
+      } else {
+        alert("Usuario o contraseña incorrectos.");
+        return false;
+      }
+    }
+    
+    // Función para registrar un nuevo usuario
+    function registrarUsuario() {
+      const nuevoUsuario = document.getElementById('nuevoUsuario').value;
+      const email = document.getElementById('email').value;
+      const nuevaContrasena = document.getElementById('nuevaContrasena').value;
+      const confirmarContrasena = document.getElementById('confirmarContrasena').value;
+      const rolUsuario = document.getElementById('rolUsuario').value;
+      
+      // Validar que las contraseñas coincidan
+      if (nuevaContrasena !== confirmarContrasena) {
+        alert('Las contraseñas no coinciden');
+        return false;
+      }
+      
+      // Validar longitud mínima de contraseña
+      if (nuevaContrasena.length < 4) {
+        alert('La contraseña debe tener al menos 4 caracteres');
+        return false;
+      }
+      
+      // Obtener usuarios existentes o crear array vacío
+      const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+      
+      // Verificar si el usuario ya existe
+      if (usuarios.some(u => u.usuario === nuevoUsuario)) {
+        alert('Este nombre de usuario ya está registrado');
+        return false;
+      }
+      
+      // Verificar si el email ya existe
+      if (usuarios.some(u => u.email === email)) {
+        alert('Este correo electrónico ya está registrado');
+        return false;
+      }
+      
+      // Crear nuevo usuario
+      const usuario = {
+        id: Date.now(),
+        usuario: nuevoUsuario,
+        email: email,
+        contrasena: nuevaContrasena,
+        rol: rolUsuario,
+        fechaRegistro: new Date().toISOString()
+      };
+      
+      // Agregar el nuevo usuario al array
+      usuarios.push(usuario);
+      
+      // Guardar en localStorage
+      localStorage.setItem('usuarios', JSON.stringify(usuarios));
+      
+      // Mostrar mensaje de éxito
+      alert('Usuario registrado correctamente. Ahora puedes iniciar sesión.');
+      
+      // Cerrar el modal
+      modal.style.display = 'none';
+      
+      // Limpiar el formulario
+      document.getElementById('formRegistro').reset();
+      
+      return false;
+    }
+  </script>
+</body>
+</html>
+
