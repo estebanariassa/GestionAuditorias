@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    font-family: 'Segoe UI', Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     background-color: #f4f4f4;
 }
 
@@ -198,6 +198,217 @@ body {
     transform: translateY(1px); /* Efecto de presión */
 }
 
+/* Sección de correo electrónico */
+#seccion-correo {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+    border-left: 4px solid #4b8d1b;
+}
+
+#seccion-correo h3 {
+    color: #1f2d5c;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 18px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+#seccion-correo .campo {
+    margin-bottom: 15px;
+}
+
+#seccion-correo label {
+    display: block;
+    font-weight: bold;
+    color: #1f2d5c;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+#seccion-correo input,
+#seccion-correo textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: inherit;
+}
+
+/* Estilo para input con botón al lado */
+.input-with-button {
+    display: flex;
+    gap: 10px;
+}
+
+.input-with-button input {
+    flex: 1;
+}
+
+.input-with-button button {
+    padding: 8px 15px;
+    background-color: #1f2d5c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.input-with-button button:hover {
+    background-color: #161e3e;
+}
+
+/* Modal de correos registrados */
+.modal-correos {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    overflow: auto;
+}
+
+.modal-correos-contenido {
+    background-color: white;
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 500px;
+    max-width: 90%;
+    position: relative;
+}
+
+.cerrar-modal-correos {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.cerrar-modal-correos:hover {
+    color: #1f2d5c;
+}
+
+.modal-correos-contenido h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #1f2d5c;
+    font-size: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.lista-correos {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.correo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.correo-item:last-child {
+    border-bottom: none;
+}
+
+.correo-item .correo-texto {
+    flex: 1;
+}
+
+.correo-item .correo-acciones {
+    display: flex;
+    gap: 5px;
+}
+
+.correo-item .btn-usar,
+.correo-item .btn-eliminar {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.correo-item .btn-usar {
+    background-color: #4b8d1b;
+    color: white;
+}
+
+.correo-item .btn-eliminar {
+    background-color: #d9534f;
+    color: white;
+}
+
+#seccion-correo textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+/* Modal de confirmación */
+.modal-confirmacion {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-confirmacion-contenido {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 400px;
+    max-width: 90%;
+    text-align: center;
+}
+
+.modal-confirmacion-contenido p {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #333;
+}
+
+.modal-confirmacion-contenido button {
+    padding: 10px 20px;
+    background-color: #4b8d1b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.modal-confirmacion-contenido button:hover {
+    background-color: #3a6e15;
+}
+
 /* Botones de generar y limpiar */
 .botones {
     display: flex;
@@ -225,4 +436,79 @@ body {
 
 .botones button:active {
     transform: translateY(1px); /* Efecto de presión */
+}
+
+/* Estilos para la sección del tablero */
+.seccion-tablero {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f0f7ff;
+    border-radius: 5px;
+    border-left: 4px solid #1f2d5c;
+}
+
+.seccion-tablero h3 {
+    margin-top: 0;
+    color: #1f2d5c;
+    margin-bottom: 15px;
+}
+
+.campo-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.campo-checkbox input[type="checkbox"] {
+    margin-right: 10px;
+    width: auto;
+}
+
+.tablero-preview {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tablero-info p {
+    margin: 5px 0;
+}
+
+.btn-secundario {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-secundario:hover {
+    background-color: #5a6268;
+}
+
+/* Estilos para campos con error de validación */
+.campo-error {
+    border: 2px solid #dc3545 !important;
+    background-color: #fff8f8 !important;
+    box-shadow: 0 0 5px rgba(220, 53, 69, 0.3) !important;
+}
+
+/* Contador de caracteres */
+.contador-caracteres {
+    font-size: 12px;
+    color: #666;
+    text-align: right;
+    margin-top: 5px;
+}
+
+.contador-excedido {
+    color: #dc3545;
+    font-weight: bold;
 }

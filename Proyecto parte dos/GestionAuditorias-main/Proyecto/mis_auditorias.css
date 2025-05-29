@@ -1,7 +1,7 @@
 /* Estilo general del body */
 body {
   margin: 0;
-  font-family:Georgia, 'Times New Roman', Times, serif;
+  font-family: 'Roboto', sans-serif;
   background-color: #f4f4f4; /* Color de fondo suave */
 }
 

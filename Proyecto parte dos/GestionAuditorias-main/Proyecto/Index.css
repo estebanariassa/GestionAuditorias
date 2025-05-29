@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Roboto', sans-serif;
   background-color: #f4f4f4;
 }
 
@@ -62,8 +62,90 @@ body {
   cursor: pointer;
 }
 
-/* Círculos */
+/* Enlace de registro */
+.registro-link {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #666;
+}
 
+.registro-link a {
+  color: #123366;
+  text-decoration: none;
+  font-weight: 500;
+}
 
+.registro-link a:hover {
+  text-decoration: underline;
+}
 
-  
+/* Modal de registro */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: auto;
+}
+
+.modal-contenido {
+  background-color: white;
+  margin: 10% auto;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  width: 400px;
+  max-width: 90%;
+  position: relative;
+}
+
+.cerrar-modal {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.cerrar-modal:hover {
+  color: #123366;
+}
+
+.modal-contenido h2 {
+  margin-bottom: 20px;
+  color: #123366;
+  text-align: center;
+}
+
+.modal-contenido input,
+.modal-contenido select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-family: 'Roboto', sans-serif;
+}
+
+.modal-contenido button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  background-color: #123366;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.modal-contenido button:hover {
+  background-color: #0a1f40;
+}
