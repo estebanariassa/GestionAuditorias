@@ -50,6 +50,7 @@ header {
   right: 30px;
   display: none;
   z-index: 100;
+  
 }
 
 .menu-item {
@@ -58,6 +59,7 @@ header {
   padding: 10px 15px;
   cursor: pointer;
   transition: background 0.2s;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .menu-item:hover {
@@ -68,6 +70,8 @@ header {
   margin-right: 10px;
   width: 20px;
   text-align: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  
 }
 
 .menu-divider {
