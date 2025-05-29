@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
   background-color: #f4f4f4;
 }
 
@@ -35,11 +35,13 @@ body {
   box-shadow: 0 0 8px rgba(0,0,0,0.1);
   width: 300px;
   text-align: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .login-container h2 {
   margin-bottom: 20px;
   color: #123366;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .login-container input {
@@ -49,6 +51,7 @@ body {
   border-radius: 5px;
   border: 1px solid #ccc;
   text-align: center;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .login-container button {
@@ -60,6 +63,7 @@ body {
   border-radius: 5px;
   font-weight: bold;
   cursor: pointer;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 /* Enlace de registro */
@@ -130,7 +134,7 @@ body {
   margin: 10px 0;
   border-radius: 5px;
   border: 1px solid #ccc;
-  font-family: 'Roboto', sans-serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .modal-contenido button {
@@ -144,8 +148,10 @@ body {
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .modal-contenido button:hover {
   background-color: #0a1f40;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
