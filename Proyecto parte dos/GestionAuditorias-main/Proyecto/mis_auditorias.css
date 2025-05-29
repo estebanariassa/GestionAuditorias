@@ -13,9 +13,10 @@ header {
 
 /* Texto del logo dentro del header */
 .logo {
-  color: hsl(0, 0%, 0%);
+  color: hwb(0 99% 0%);
   font-size: 2rem;
   font-weight: bold;
+  
 }
 
 /* Contenedor principal que envuelve sidebar y main */

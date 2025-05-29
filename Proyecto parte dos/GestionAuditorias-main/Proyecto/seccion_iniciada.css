@@ -7,7 +7,7 @@
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
   background-color: #fff;
   min-height: 100vh;
   display: flex;
@@ -232,6 +232,7 @@ label[for="numero-auditoria"] {
 .botones {
   display: flex;
   gap: 20px;
+  font-size: 16px;
 }
 
 .botones button {
@@ -246,6 +247,7 @@ label[for="numero-auditoria"] {
 
 .botones button:hover {
   background-color: #16294f;
+  font-size: 16px;
 }
 
 /* ========== PIE DE PÁGINA ========== */
