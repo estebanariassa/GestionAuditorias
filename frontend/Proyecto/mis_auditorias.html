@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Mis Auditorias</title>
+    <link rel="stylesheet" href="/Proyecto/mis_auditorias.css">
+    <script src="/Proyecto/api.js"></script>
+</head>
+<body>
+  <header>
+    <div class="logo">El Comité</div>
+  </header>
+  <div class="container">
+    <nav class="sidebar">
+      <a href="/Proyecto/seccion_iniciada.html">✏️ Planear auditoría</a>
+      <a href="/Proyecto/mis_auditorias.html">💻 Mis auditorías</a>
+      <a href="/Proyecto/tablero.html">📊 Generar Tablero</a>
+    </nav>
+    <main>
+      <div class="top-bar">
+        <h2>Mis auditorías</h2>        <div class="search-bar">
+          <input type="text" id="searchInput" placeholder="Buscar por nombre" onkeyup="filterAudits()" />
+        </div>
+        <a href="/Proyecto/seccion_iniciada.html"><button class="plan-btn">Planear auditoría</button></a>
+      </div>
+
+      <table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Fecha</th>
+      <th>Auditor</th>
+      <th></th>
+    </tr>
+  </thead>  <tbody id="auditsTableBody">
+    <!-- Las auditorías se cargarán dinámicamente -->
+  </tbody>
+</table>
+
+    </main>
+  </div>
+
+  <script>
+    let allAudits = [];
+
+    // Verificar autenticación al cargar la página
+    window.addEventListener('DOMContentLoaded', async () => {
+      if (!requireAuth()) {
+        return;
+      }
+      
+      await loadAudits();
+    });
+
+    // Cargar auditorías desde el backend
+    async function loadAudits() {
+      try {
+        console.log('Cargando auditorías...');
+        const response = await api.audits.getAll();
+        console.log('Respuesta del servidor:', response);
+        
+        if (response.success && response.data) {
+          allAudits = response.data;
+          displayAudits(response.data);
+        } else {
+          console.error('Error en la respuesta:', response);
+          allAudits = [];
+          displayAudits([]);
+        }
+      } catch (error) {
+        console.error('Error al cargar auditorías:', error);
+        alert('Error al cargar las auditorías: ' + error.message);
+        allAudits = [];
+        displayAudits([]);
+      }
+    }
+
+    // Mostrar auditorías en la tabla
+    function displayAudits(audits) {
+      const tableBody = document.getElementById('auditsTableBody');
+      
+      if (!audits || audits.length === 0) {
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="4" style="text-align: center; color: #666;">
+              No hay auditorías disponibles
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tableBody.innerHTML = audits.map(audit => `
+        <tr>
+          <td>${audit.name || audit.process || 'Sin nombre'}</td>
+          <td>${audit.planned_date ? new Date(audit.planned_date).toLocaleDateString('es-ES') : 
+                audit.auditDate ? new Date(audit.auditDate).toLocaleDateString('es-ES') : 'Sin fecha'}</td>
+          <td>${audit.auditor ? audit.auditor.fullName : 
+                audit.User ? audit.User.fullName || audit.User.name : 'N/A'}</td>
+          <td>
+            <button class="report-btn" onclick="generateReport(${audit.id})">
+              Generar Informe
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Filtrar auditorías por nombre
+    function filterAudits() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const filteredAudits = allAudits.filter(audit =>
+        audit.name.toLowerCase().includes(searchTerm)
+      );
+      displayAudits(filteredAudits);
+    }
+
+    // Generar informe (placeholder)
+    function generateReport(auditId) {
+      const audit = allAudits.find(a => a.id === auditId);
+      if (audit) {
+        alert(`Generando informe para: ${audit.name}`);
+        // Aquí se podría redirigir a una página de generación de informes
+        // window.location.href = `generar_informe.html?auditId=${auditId}`;
+      }
+    }
+  </script>
+</body>
+</html>

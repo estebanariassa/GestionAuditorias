@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auditorías - El Comité</title>
+  <link rel="stylesheet" href="/Proyecto/seccion_iniciada.css">
+  <script src="/Proyecto/api.js"></script>
+</head>
+<body>
+
+  <!-- Encabezado superior -->
+  <header class="header">
+    <h1>El Comité</h1>
+  </header>
+
+  <!-- Contenedor general -->
+  <div class="main-container">
+
+    <!-- Menú lateral -->
+    <nav class="sidebar">
+      <a href="/Proyecto/seccion_iniciada.html" onclick="mostrarSeccion('planear')">✏️ Planear auditoría</a>
+      <a href="/Proyecto/mis_auditorias.html" onclick="mostrarSeccion('mis')">💻 Mis auditorías</a>
+      <a href="/Proyecto/tablero.html">📊 Generar Tablero</a>
+    </nav>
+
+    <!-- Área de contenido -->
+    <div class="content">
+      
+      <!-- Sección Planear -->
+      <div id="planear" class="section active">
+        <h2>Planear auditoría</h2>
+
+        <!-- BLOQUE PROCESOS, NUMERO, CICLO -->
+        <div class="bloque-procesos">
+          <div class="Procesos">
+            <label for="procesos">Procesos</label>
+            <input type="text" id="procesos" placeholder="Escribe el proceso de la auditoría">
+          </div>
+          <div class="Numero">
+            <label for="numero-auditoria">No. Auditoría</label>
+            <input type="number" id="numero-auditoria" value="0">
+          </div>
+          <div class="Ciclo">
+            <label for="ciclo">Ciclo</label>
+            <input type="number" id="ciclo" value="0">
+          </div>
+        </div>
+
+        <!-- BLOQUE PROPÓSITO Y ALCANCE -->
+        <div class="bloque-proposito-alcance">
+          <label for="proposito">Propósito</label>
+          <textarea id="proposito" placeholder="Escribe el propósito de la auditoría" rows="5"></textarea>
+
+          <label for="alcance">Alcance</label>
+          <textarea id="alcance" placeholder="Escribe el alcance de la auditoría" rows="5"></textarea>
+        </div>
+
+        <!-- BLOQUE FECHA - AUDITOR LÍDER - AUDITADOS -->
+        <div class="bloque-fecha-auditor">
+          <div class="campo">
+            <label for="fecha">Fecha</label>
+            <input type="date" id="fecha">
+          </div>
+          <div class="campo">
+            <label for="auditor-lider">Auditor líder</label>
+            <textarea id="auditor-lider" placeholder="Seleccionar líder" rows="1"></textarea>
+          </div>
+          <div class="campo">
+            <label for="auditados">Auditados</label>
+            <textarea id="auditados" placeholder="Nombre del auditado" rows="1"></textarea>
+          </div>
+        </div>
+
+        <!-- BLOQUE FECHA DE APERTURA -->
+        <div class="bloque-apertura">
+          <div class="FechaA">
+            <label for="fecha-apertura">Fecha de Apertura</label>
+            <input type="date" id="fecha-apertura">
+          </div>
+          <div class="FechaA">
+            <label for="hora-inicio">Hora de inicio</label>
+            <input type="time" id="hora-inicio">
+          </div>
+          <div class="FechaA">
+            <label for="lugar-reunion">Lugar de reunión</label>
+            <textarea id="lugar-reunion" placeholder="Escriba el lugar de la auditoría" rows="1"></textarea>
+          </div>
+        </div>
+
+        <!-- BLOQUE REUNIÓN DE CIERRE -->
+        <div class="bloque-cierre">
+          <div class="CierreA">
+            <label for="reunion-cierre">Reunión de cierre</label>
+            <input type="date" id="reunion-cierre">
+          </div>
+          <div class="CierreA">
+            <label for="hora-cierre">Hora de cierre</label>
+            <input type="time" id="hora-cierre">
+          </div>
+          <div class="CierreA">
+            <label for="lugar-cierre">Lugar de cierre</label>
+            <textarea id="lugar-cierre" placeholder="Ubicación de la auditoría" rows="1"></textarea>
+          </div>
+        </div>
+
+        <!-- BLOQUE SEGUNDO AUDITOR -->
+        <div class="bloque-segundo-auditor" style="margin-top: 20px;">
+          <label for="segundo-auditor">Segundo Auditor</label>
+          <textarea id="segundo-auditor" placeholder="Escriba el segundo auditor" rows="5"></textarea>
+          <button class="btn-add" type="button">
+            Añadir
+            <span class="circle">+</span>
+          </button>
+        </div>
+
+        <!-- BLOQUE DOCUMENTOS APLICABLES -->
+        <div class="bloque-documentos">
+          <div class="campo-doc">
+            <label for="documentos-aplicables">Documentos Aplicables</label>
+            <textarea id="documentos-aplicables" placeholder="Escriba los documentos que se necesitan en la auditoría" rows="5"></textarea>
+          </div>
+          <div class="campo-doc">
+            <label for="codigo-documento">Código del documento</label>
+            <input type="number" id="codigo-documento">
+          </div>
+          <div class="campo-doc">
+            <label for="version-documento">Versión del documento</label>
+            <input type="number" id="version-documento">
+          </div>
+        </div>        <!-- Botones -->
+        <div class="botones">
+          <button type="button" onclick="guardarAuditoria()">Confirmar</button>
+          <button type="button" onclick="limpiarFormulario()">Cancelar</button>
+        </div>
+
+      </div> <!-- Fin sección planear -->
+
+      <!-- Sección Mis auditorías -->
+      <div id="mis" class="section">
+        <h2>Mis auditorías</h2>
+        <p>Aquí aparecerán tus auditorías registradas.</p>
+      </div>
+
+    </div> <!-- Fin área de contenido -->
+
+  </div> <!-- Fin contenedor general -->
+
+  <!-- Footer -->
+  <footer class="footer">
+    <button type="button" class="cerrar-sesion">
+      &#x21B7; Cerrar sesión
+    </button>
+  </footer>
+  <!-- Scripts -->
+  <script src="/Proyecto/api.js"></script>
+  <script>
+    // Verificar autenticación al cargar la página
+    document.addEventListener('DOMContentLoaded', function() {
+      if (!requireAuth()) {
+        return;
+      }
+      
+      const user = getCurrentUser();
+      if (user) {
+        // Mostrar información del usuario
+        console.log('Usuario logueado:', user.fullName);
+        loadAuditors(); // Cargar lista de auditores para el formulario
+      }
+    });
+
+    function mostrarSeccion(id) {
+      document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }    // Función para cargar auditores en el formulario
+    async function loadAuditors() {
+      try {
+        const users = await api.users.getAuditors();
+        console.log('Auditores disponibles:', users);
+        // Aquí podrías agregar un select de auditores si lo necesitas en el formulario
+      } catch (error) {
+        console.error('Error cargando auditores:', error);
+      }
+    }
+
+    // Función para guardar auditoría
+    async function guardarAuditoria() {
+      const user = getCurrentUser();
+      if (!user) {
+        alert('Error: Usuario no autenticado');
+        return;
+      }      const auditData = {
+        name: document.getElementById('procesos').value + ' - Auditoría',
+        process: document.getElementById('procesos').value,
+        auditNumber: parseInt(document.getElementById('numero-auditoria').value),
+        cycle: parseInt(document.getElementById('ciclo').value),
+        purpose: document.getElementById('proposito').value,
+        scope: document.getElementById('alcance').value,
+        planned_date: document.getElementById('fecha').value,
+        auditor_leader: document.getElementById('auditor-lider').value,
+        auditees: document.getElementById('auditados').value,
+        opening_date: document.getElementById('fecha-apertura').value,
+        opening_time: document.getElementById('hora-inicio').value,
+        meeting_place: document.getElementById('lugar-reunion').value,
+        closing_date: document.getElementById('reunion-cierre').value,
+        closing_time: document.getElementById('hora-cierre').value,
+        closing_place: document.getElementById('lugar-cierre').value,
+        second_auditor: document.getElementById('segundo-auditor').value,
+        applicable_documents: document.getElementById('documentos-aplicables').value,
+        document_code: document.getElementById('codigo-documento').value,
+        document_version: document.getElementById('version-documento').value,
+        user_id: user.id
+      };
+
+      // Validar campos requeridos
+      if (!auditData.process || !auditData.auditNumber) {
+        alert('Los campos Proceso y No. Auditoría son obligatorios');
+        return;
+      }      try {
+        const result = await api.audits.create(auditData);
+        alert('Auditoría creada exitosamente');
+        // Limpiar formulario
+        limpiarFormulario();
+        // Generar nuevo número de auditoría
+        generateNextAuditNumber();
+      } catch (error) {
+        console.error('Error creando auditoría:', error);
+        alert('Error al crear la auditoría: ' + error.message);
+      }
+    }    // Función para generar el siguiente número de auditoría
+    async function generateNextAuditNumber() {
+      try {
+        const audits = await api.audits.getAll();
+        if (audits && audits.length > 0) {
+          const nextNumber = Math.max(...audits.map(a => a.auditNumber || 0)) + 1;
+          document.getElementById('numero-auditoria').value = nextNumber;
+        } else {
+          document.getElementById('numero-auditoria').value = 1;
+        }
+      } catch (error) {
+        console.error('Error generando número de auditoría:', error);
+        document.getElementById('numero-auditoria').value = 1;
+      }
+    }
+
+    // Función para limpiar formulario
+    function limpiarFormulario() {
+      document.getElementById('procesos').value = '';
+      document.getElementById('ciclo').value = '0';
+      document.getElementById('proposito').value = '';
+      document.getElementById('alcance').value = '';
+      document.getElementById('fecha').value = '';
+      document.getElementById('auditor-lider').value = '';
+      document.getElementById('auditados').value = '';
+      document.getElementById('fecha-apertura').value = '';
+      document.getElementById('hora-inicio').value = '';
+      document.getElementById('lugar-reunion').value = '';
+      document.getElementById('reunion-cierre').value = '';
+      document.getElementById('hora-cierre').value = '';
+      document.getElementById('lugar-cierre').value = '';
+      document.getElementById('segundo-auditor').value = '';
+      document.getElementById('documentos-aplicables').value = '';
+      document.getElementById('codigo-documento').value = '';
+      document.getElementById('version-documento').value = '';
+    }
+
+    // Inicializar número de auditoría al cargar
+    document.addEventListener('DOMContentLoaded', function() {
+      generateNextAuditNumber();
+    });
+
+    document.querySelector(".cerrar-sesion").addEventListener("click", logout);
+  </script>
+
+</body>
+</html>
+

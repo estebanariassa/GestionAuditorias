@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>El Comité - Login</title>
+  <link rel="stylesheet" href="/Proyecto/Index.css">
+  <script src="/Proyecto/api.js"></script>
+</head>
+<body>
+  <div class="background">
+    
+    <!-- Contenedor del Login -->
+    <div class="login-container">
+      <h2>Iniciar sesión</h2>
+      <form onsubmit="return validarLogin()">
+        <input type="text" id="usuario" placeholder="Usuario" required>
+        <input type="password" id="contrasena" placeholder="Contraseña" required>
+        <button type="submit">Continuar</button>
+      </form>
+    </div>
+
+    <!-- Título -->
+    <div class="head">
+      <h1>Gestión Auditorias</h1>
+    </div>
+  </div>
+  <div class="footer">
+    <p>© 2025 El Comité. Todos los derechos reservados.</p>
+    
+  <!-- Validación con JavaScript y conexión al backend -->
+  <script>
+    async function validarLogin() {
+      const usuario = document.getElementById("usuario").value;
+      const contrasena = document.getElementById("contrasena").value;
+
+      if (!usuario || !contrasena) {
+        alert("Por favor, complete todos los campos.");
+        return false;
+      }
+
+      try {
+        const data = await api.auth.login(usuario, contrasena);
+
+        if (data.success) {
+          // Guardar información del usuario en localStorage
+          localStorage.setItem('user', JSON.stringify(data.user));
+          window.location.href = "/Proyecto/seccion_iniciada.html";
+        } else {
+          alert(data.message || "Usuario o contraseña incorrectos.");
+        }
+      } catch (error) {
+        console.error('Error de conexión:', error);
+        alert("Error de conexión con el servidor. Verifique que el backend esté ejecutándose.");
+      }
+
+      return false; // Prevenir envío del formulario
+    }
+  </script>
+</body>
+</html>
+
