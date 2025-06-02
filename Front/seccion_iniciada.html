@@ -2,15 +2,45 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>El Comité - Auditorías</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auditorías - El Comité</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- CSS común para todas las páginas -->
+  <link rel="stylesheet" href="common.css">
   <link rel="stylesheet" href="seccion_iniciada.css">
   <link rel="stylesheet" href="parte_de_graficas.html">
+  <link rel="stylesheet" href="boton_usuario.html">
+  <!-- Font Awesome para iconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Script para el menú de usuario -->
+  <script src="user-menu.js"></script>
 </head>
 <body>
 
   <!-- Encabezado superior -->
   <header class="header">
-    <h1>El Comité</h1>
+    <div class="logo-container">
+      <div class="logo">
+        <div class="logo-icon">EC</div>
+        Planear Auditoría
+      </div>
+    </div>
+    <div class="user-menu">
+      <div class="user-icon">U</div>
+      <div class="user-dropdown">
+        <a href="#" class="user-dropdown-item">
+          <i class="fas fa-user"></i> Mi Perfil
+        </a>
+        <a href="#" class="user-dropdown-item">
+          <i class="fas fa-cog"></i> Configuración
+        </a>
+        <a href="Index.html" class="user-dropdown-item logout">
+          <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+        </a>
+      </div>
+    </div>
   </header>
 
   <!-- Contenedor general -->
@@ -18,16 +48,18 @@
 
     <!-- Menú lateral -->
     <nav class="sidebar">
-      <a href="#" onclick="mostrarSeccion('planear')">✏️ Planear auditoria</a>
-      <a href="#" onclick="mostrarSeccion('mis')">💻 Mis auditorias</a>
-      <a href="parte_de_graficas.html" onclick="mostrarSeccion('graficos')">Generar Tablero</a>
+      <a href="seccion_iniciada.html" onclick="mostrarSeccion('planear')">✏️ Planear auditoría</a>
+      <a href="mis_auditorias.html" onclick="mostrarSeccion('mis')">💻 Mis auditorías</a>
+      <a href="tablero.html">📊 Generar Tablero</a>
     </nav>
 
     <!-- Área de contenido -->
     <div class="content">
+      
+      <!-- Sección Planear -->
       <div id="planear" class="section active">
         <h2>Planear auditoría</h2>
-    
+
         <!-- BLOQUE PROCESOS, NUMERO, CICLO -->
         <div class="bloque-procesos">
           <div class="Procesos">
@@ -43,16 +75,16 @@
             <input type="number" id="ciclo" value="0">
           </div>
         </div>
-    
+
         <!-- BLOQUE PROPÓSITO Y ALCANCE -->
         <div class="bloque-proposito-alcance">
           <label for="proposito">Propósito</label>
           <textarea id="proposito" placeholder="Escribe el propósito de la auditoría" rows="5"></textarea>
-    
+
           <label for="alcance">Alcance</label>
           <textarea id="alcance" placeholder="Escribe el alcance de la auditoría" rows="5"></textarea>
         </div>
-    
+
         <!-- BLOQUE FECHA - AUDITOR LÍDER - AUDITADOS -->
         <div class="bloque-fecha-auditor">
           <div class="campo">
@@ -68,7 +100,7 @@
             <textarea id="auditados" placeholder="Nombre del auditado" rows="1"></textarea>
           </div>
         </div>
-    
+
         <!-- BLOQUE FECHA DE APERTURA -->
         <div class="bloque-apertura">
           <div class="FechaA">
@@ -84,7 +116,7 @@
             <textarea id="lugar-reunion" placeholder="Escriba el lugar de la auditoría" rows="1"></textarea>
           </div>
         </div>
-    
+
         <!-- BLOQUE REUNIÓN DE CIERRE -->
         <div class="bloque-cierre">
           <div class="CierreA">
@@ -100,7 +132,7 @@
             <textarea id="lugar-cierre" placeholder="Ubicación de la auditoría" rows="1"></textarea>
           </div>
         </div>
-    
+
         <!-- BLOQUE SEGUNDO AUDITOR -->
         <div class="bloque-segundo-auditor" style="margin-top: 20px;">
           <label for="segundo-auditor">Segundo Auditor</label>
@@ -110,7 +142,7 @@
             <span class="circle">+</span>
           </button>
         </div>
-    
+
         <!-- BLOQUE DOCUMENTOS APLICABLES -->
         <div class="bloque-documentos">
           <div class="campo-doc">
@@ -126,41 +158,102 @@
             <input type="number" id="version-documento">
           </div>
         </div>
-    
-      </div> <!-- Cierre sección planear -->
-      <div class="botones">
-        <button type="button">Confirmar</button>
-        <button type="button">Cancelar</button>
+
+        <!-- Botones -->
+        <div class="botones">
+          <button type="button">Confirmar</button>
+          <button type="button">Cancelar</button>
+        </div>
+
+      </div> <!-- Fin sección planear -->
+
+      <!-- Sección Mis auditorías -->
+      <div id="mis" class="section">
+        <h2>Mis auditorías</h2>
+        <p>Aquí aparecerán tus auditorías registradas.</p>
       </div>
-      
-    </div> <!-- Cierre content -->
-    
 
-    <div id="mis" class="section">
-      <h2>Mis auditorias</h2>
-      <p>Aquí aparecerán tus auditorías registradas.</p>
-    </div>
-    
-    <footer class="footer">
-      <button type="button" class="cerrar-sesion">
-        &#x21B7; Cerrar sesión
-      </button>
-    </footer>
-    </div>
-  </div>
+    </div> <!-- Fin área de contenido -->
 
+  </div> <!-- Fin contenedor general -->
+
+  <!-- Footer -->
+  <footer class="footer">
+    <button type="button" class="cerrar-sesion">
+      &#x21B7; Cerrar sesión
+    </button>
+  </footer>
+
+  <!-- Scripts -->
   <script>
     function mostrarSeccion(id) {
       document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
+
     document.querySelector(".cerrar-sesion").addEventListener("click", cerrarSesion);
 
     function cerrarSesion() {
       localStorage.clear();
       window.location.href = "parte_frontal.html";
     }
+
+    // Función para guardar la auditoría
+    function guardarAuditoria() {
+      // Obtener todos los datos del formulario
+      const auditoria = {
+        id: Date.now(), // Identificador único basado en timestamp
+        proceso: document.getElementById('procesos').value,
+        numeroAuditoria: document.getElementById('numero-auditoria').value,
+        ciclo: document.getElementById('ciclo').value,
+        proposito: document.getElementById('proposito').value,
+        alcance: document.getElementById('alcance').value,
+        fecha: document.getElementById('fecha').value,
+        auditorLider: document.getElementById('auditor-lider').value,
+        auditados: document.getElementById('auditados').value,
+        fechaApertura: document.getElementById('fecha-apertura').value,
+        horaInicio: document.getElementById('hora-inicio').value,
+        lugarReunion: document.getElementById('lugar-reunion').value,
+        reunionCierre: document.getElementById('reunion-cierre').value,
+        horaCierre: document.getElementById('hora-cierre').value,
+        lugarCierre: document.getElementById('lugar-cierre').value,
+        segundoAuditor: document.getElementById('segundo-auditor').value,
+        documentosAplicables: document.getElementById('documentos-aplicables').value,
+        codigoDocumento: document.getElementById('codigo-documento').value,
+        versionDocumento: document.getElementById('version-documento').value
+      };
+
+      // Validar que al menos los campos esenciales estén completos
+      if (!auditoria.proceso || !auditoria.fecha || !auditoria.auditorLider) {
+        alert('Por favor completa al menos los campos de Proceso, Fecha y Auditor Líder');
+        return;
+      }
+
+      // Obtener auditorías existentes del localStorage o inicializar un array vacío
+      let auditorias = JSON.parse(localStorage.getItem('misAuditorias')) || [];
+      
+      // Agregar la nueva auditoría
+      auditorias.push(auditoria);
+      
+      // Guardar en localStorage
+      localStorage.setItem('misAuditorias', JSON.stringify(auditorias));
+      
+      // Mostrar mensaje de éxito
+      alert('Auditoría guardada correctamente');
+      
+      // Redirigir a la página de mis auditorías
+      window.location.href = 'mis_auditorias.html';
+    }
+
+    // Asignar el evento al botón de confirmar
+    document.addEventListener('DOMContentLoaded', function() {
+      const btnConfirmar = document.querySelector('.botones button:first-child');
+      if (btnConfirmar) {
+        btnConfirmar.addEventListener('click', guardarAuditoria);
+      }
+    });
   </script>
 
 </body>
 </html>
+
