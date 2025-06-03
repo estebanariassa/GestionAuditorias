@@ -1,4 +1,8 @@
-class Usuario {
+
+// usuario.js
+import fetch from 'node-fetch';
+
+export class Usuario {
     constructor(gmail, contraseña, rol = null) {
         this.gmail = gmail.trim();
         this.contraseña = contraseña;
@@ -7,17 +11,17 @@ class Usuario {
 
     async registrar() {
         if (!this.gmail || !this.contraseña || !this.rol) {
-            alert("Todos los campos (gmail, contraseña y rol) son obligatorios para registrarse.");
-            return;
+            console.log("❌ Todos los campos son obligatorios.");
+            return false;
         }
 
         if (!["administrador", "auditor"].includes(this.rol)) {
-            alert("Rol inválido. Solo se permite 'administrador' o 'auditor'.");
-            return;
+            console.log("❌ Rol inválido.");
+            return false;
         }
 
         try {
-            const response = await fetch('/api/v1/registrar', {
+            const response = await fetch('http://localhost:3000/api/v1/registrar', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -28,26 +32,19 @@ class Usuario {
             });
 
             const data = await response.json();
+            if (!response.ok) throw new Error(data.detail || "Error al registrar.");
 
-            if (!response.ok) {
-                throw new Error(data.detail || "Error al registrar usuario.");
-            }
-
-            alert("Registro exitoso: " + data.mensaje);
-        } catch (error) {
-            console.error(error);
-            alert(error.message);
+            console.log("✅ Registro exitoso:", data.mensaje);
+            return true;
+        } catch (err) {
+            console.log("❌", err.message);
+            return false;
         }
     }
 
     async iniciarSesion() {
-        if (!this.gmail || !this.contraseña) {
-            alert("Debes ingresar tu Gmail y contraseña para iniciar sesión.");
-            return;
-        }
-
         try {
-            const response = await fetch('/api/v1/login', {
+            const response = await fetch('http://localhost:3000/api/v1/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -57,26 +54,14 @@ class Usuario {
             });
 
             const data = await response.json();
+            if (!response.ok) throw new Error(data.detail || "Error al iniciar sesión.");
 
-            if (!response.ok) {
-                throw new Error(data.detail || "Error al iniciar sesión.");
-            }
-
-            alert("Sesión iniciada: " + data.mensaje);
-            localStorage.setItem("usuarioActual", this.gmail);
-            localStorage.setItem("rol", data.rol);
-
-            // Redirección según rol
-            if (data.rol === "administrador") {
-                window.location.href = "admin_dashboard.html";
-            } else if (data.rol === "auditor") {
-                window.location.href = "auditor_dashboard.html";
-            } else {
-                alert("Rol no autorizado.");
-            }
-        } catch (error) {
-            console.error(error);
-            alert(error.message);
+            console.log(`✅ Sesión iniciada: ${data.mensaje}`);
+            this.rol = data.rol;
+            return this;
+        } catch (err) {
+            console.log("❌", err.message);
+            return null;
         }
     }
 }
