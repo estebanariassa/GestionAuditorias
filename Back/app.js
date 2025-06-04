@@ -1,6 +1,6 @@
 import readline from "readline";
 import { AuditoriaManager } from "./auditorias.js";
-import { Usuario } from "./usuario.js"; // 👈 importación externa
+import { Usuario } from "./usuario.js"; 
 
 const auditoriaManager = new AuditoriaManager();
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
@@ -60,16 +60,35 @@ function menuUsuario(usuario) {
 
   rl.question("Opción: ", op => {
     switch (op.trim()) {
-      case "1": planearAuditoria(usuario); break;
-      case "2": verAuditorias(usuario); break;
-      case "3": mainMenu(); break;
-      default: menuUsuario(usuario);
+      case "1":
+        auditoriaManager.planear(usuario, rl, () => menuUsuario(usuario));
+        break;
+      case "2":
+        verAuditorias(usuario);
+        break;
+      case "3":
+        mainMenu();
+        break;
+      default:
+        menuUsuario(usuario);
     }
   });
 }
 
-
-// (TODO: mantener sin cambios funciones: menuUsuario, planearAuditoria, verAuditorias)
+function verAuditorias(usuario) {
+  const auditorias = auditoriaManager.obtenerPorUsuario(usuario);
+  if (auditorias.length === 0) {
+    console.log("⚠️ No tienes auditorías registradas.");
+  } else {
+    auditorias.forEach((a, i) => {
+      console.log(`\n📁 Auditoría ${i + 1}`);
+      console.log(`Proceso: ${a.proceso}`);
+      console.log(`Fecha: ${a.fecha}`);
+      console.log(`Auditor líder: ${a.auditorLider}`);
+    });
+  }
+  menuUsuario(usuario);
+}
 
 mainMenu();
 
