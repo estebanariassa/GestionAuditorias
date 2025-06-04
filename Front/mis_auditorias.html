@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- CSS común para todas las páginas -->
-    <link rel="stylesheet" href="common.css">
     <link rel="stylesheet" href="mis_auditorias.css">
     <!-- Font Awesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -141,6 +140,19 @@
         inputBusqueda.addEventListener('input', buscarAuditorias);
       }
     });
+    const userIcon = document.querySelector('.user-icon');
+  const dropdown = document.querySelector('.user-dropdown');
+
+  userIcon.addEventListener('click', () => {
+    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+  });
+
+  // Opcional: cerrar el dropdown si haces clic fuera
+  window.addEventListener('click', (e) => {
+    if (!e.target.closest('.user-menu')) {
+      dropdown.style.display = 'none';
+    }
+  });
   </script>
 </body>
 </html>

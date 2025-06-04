@@ -12,12 +12,14 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  color: #123366; /* Color institucional agregado */
 }
 
 /* ========== ENCABEZADO SUPERIOR ========== */
 header {
   background-color: #4a8b1d; /* Verde institucional */
   padding: 1rem;
+  color: #123366; /* Color institucional agregado */
 }
 
 
@@ -50,7 +52,6 @@ header {
   right: 30px;
   display: none;
   z-index: 100;
-  
 }
 
 .menu-item {
@@ -60,6 +61,7 @@ header {
   cursor: pointer;
   transition: background 0.2s;
   font-family: Georgia, 'Times New Roman', Times, serif;
+  color: #123366; /* Color institucional agregado */
 }
 
 .menu-item:hover {
@@ -71,7 +73,7 @@ header {
   width: 20px;
   text-align: center;
   font-family: Georgia, 'Times New Roman', Times, serif;
-  
+  color: #123366; /* Color institucional agregado */
 }
 
 .menu-divider {
@@ -92,14 +94,17 @@ header {
   background-color: #f5f5f5;
   padding: 20px;
   border-right: 1px solid #ddd;
+  font-family: Georgia, 'Times New Roman', Times, serif; /* Tipografía */
+  color: #123366; /* Color institucional */
 }
 
 .sidebar a {
   display: block;
-  color: #000;
+  color: #123366; /* Color institucional */
   text-decoration: none;
   font-size: 16px;
   margin-bottom: 20px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .sidebar a:hover {
@@ -111,6 +116,8 @@ header {
   flex: 1;
   padding: 40px;
   background-color: #fff;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: #123366; /* Color institucional */
 }
 
 .section {
@@ -133,7 +140,8 @@ input, textarea {
   font-size: 14px;
   width: 100%;
   resize: none;
-  font-family: 'Georgia', serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: #123366; /* Color institucional */
 }
 
 label {
@@ -141,7 +149,7 @@ label {
   margin-top: 20px;
   font-weight: bold;
   color: #1F3366;
-  font-family: 'Georgia', serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 label[for="numero-auditoria"] {
@@ -165,7 +173,7 @@ label[for="numero-auditoria"] {
 
 .bloque-proposito-alcance {
   margin: 30px 0;
-  font-family: 'Georgia', serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .bloque-proposito-alcance label {
@@ -182,7 +190,8 @@ label[for="numero-auditoria"] {
   background-color: #fafafa;
   border: 1px solid #ccc;
   min-height: 200px;
-  font-family: 'Georgia', serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: #123366; /* Color institucional */
 }
 
 .bloque-fecha-auditor,
@@ -192,12 +201,12 @@ label[for="numero-auditoria"] {
   display: flex;
   gap: 20px;
   margin-bottom: 30px;
-  font-family: 'Georgia', serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .bloque-documentos {
   margin-top: 30px;
-  font-family: 'Georgia', serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 /* === Botón Añadir === */
@@ -207,14 +216,14 @@ label[for="numero-auditoria"] {
   gap: 8px;
   padding: 10px 20px;
   background-color: #f9f9f9;
-  color: #000;
+  color: #123366; /* Color institucional */
   font-size: 16px;
   border: 1px solid #e0e0e0;
   border-radius: 999px;
   font-weight: 500;
   cursor: pointer;
   margin-top: 10px;
-  font-family: 'Georgia', serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .btn-add .circle {
@@ -223,7 +232,7 @@ label[for="numero-auditoria"] {
   align-items: center;
   width: 20px;
   height: 20px;
-  border: 1.5px solid #000;
+  border: 1.5px solid #123366; /* Color institucional */
   border-radius: 50%;
   font-size: 14px;
 }
@@ -243,11 +252,11 @@ label[for="numero-auditoria"] {
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .botones button:hover {
   background-color: #16294f;
-  font-size: 16px;
 }
 
 /* ========== PIE DE PÁGINA ========== */
@@ -255,23 +264,24 @@ label[for="numero-auditoria"] {
   padding: 20px;
   background-color: #f5f5f5;
   text-align: left;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: #123366; /* Color institucional */
 }
 
 .cerrar-sesion {
   background: none;
   border: none;
-  color: black;
+  color: #123366; /* Color institucional */
   font-size: 16px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 5px;
-  font-family: 'Georgia', serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .cerrar-sesion:hover {
   text-decoration: underline;
-  font-family: 'Georgia', serif;
 }
 
 /* ========== INPUT FOCUS ========== */
@@ -279,5 +289,6 @@ input:focus, textarea:focus {
   border: 2px solid #4285F4;
   outline: none;
   background-color: #fff;
-  font-family: 'Georgia', serif;
+  color: #123366; /* Color institucional */
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }

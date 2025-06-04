@@ -1,113 +1,230 @@
 /* Estilo general del body */
 body {
   margin: 0;
-  font-family:Georgia, 'Times New Roman', Times, serif;
-  background-color: #f4f4f4; /* Color de fondo suave */
+  font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+  background-color: #f4f4f4;
 }
 
-/* Encabezado superior con el nombre del comité */
-header {
-  background-color: #4a8b1d; /* Verde institucional */
+/* Encabezado superior */
+.header {
+  background-color: #123366; /* AZUL aplicado al header completo */
   padding: 1rem;
-}
-
-/* Texto del logo dentro del header */
-.logo {
-  color: hwb(0 99% 0%);
-  font-size: 2rem;
-  font-weight: bold;
-  
-}
-
-/* Contenedor principal que envuelve sidebar y main */
-.container {
-  display: flex;
-  min-height: 100vh; /* Altura mínima de toda la pantalla */
-}
-
-/* Barra lateral (sidebar de navegación) */
-.sidebar {
-  width: 200px;
-  background-color: #fff;
-  padding: 1rem;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra suave al lado */
-  display: flex;
-  flex-direction: column;
-}
-
-/* Estilos para los enlaces de navegación en la sidebar */
-.sidebar a {
-  padding: 0.75rem;
-  text-decoration: none;
-  color: hsl(0, 0%, 0%);
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  border-radius: 5px;
-  transition: background-color 0.2s;
-}
-
-/* Efecto hover para resaltar el enlace cuando el cursor pasa por encima */
-.sidebar a:hover {
-  background-color: #e0e0e0;
-}
-
-/* Área principal de contenido */
-main {
-  flex: 1;
-  padding: 2rem;
-}
-
-/* Barra superior con título, buscador y botón */
-.top-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-/* Estilo del campo de búsqueda */
-.search-bar input {
-  padding: 0.5rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-family: 'Georgia', serif;
+/* Contenedor del logo */
+.logo-container {
+  display: flex;
+  align-items: center;
+  background-color: #123366; /* mismo azul que el header */
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
 }
 
-/* Botón azul para "Planear auditoría" */
+/* Texto del logo */
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+/* Ícono del logo */
+.logo-icon {
+  background-color: #ffffff;
+  color: #123366;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-right: 0.5rem;
+}
+
+/* Contenedor del menú de usuario */
+.user-menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* Círculo con inicial del usuario */
+.user-icon {
+  background-color: #ffffff;
+  color: #2c3e50;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  transition: background-color 0.3s;
+}
+
+.user-icon:hover {
+  background-color: #f0f0f0;
+}
+
+/* Dropdown oculto inicialmente */
+.user-dropdown {
+  display: none;
+  position: absolute;
+  top: 55px;
+  right: 0;
+  background-color: #ffffff;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  min-width: 180px;
+  padding: 0.5rem 0;
+}
+
+/* Items del dropdown */
+.user-dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  text-decoration: none;
+  color: #333;
+  font-size: 0.95rem;
+  font-family: 'Segoe UI', sans-serif;
+  transition: background-color 0.2s;
+}
+
+.user-dropdown-item i {
+  margin-right: 8px;
+}
+
+.user-dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+.user-dropdown-item.logout {
+  color: #c62828;
+}
+
+/* Contenedor principal */
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 180px;
+  color: #123366;
+  background-color: #fff;
+  padding: 1rem;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar a {
+  padding: 0.5rem 0.75rem;
+  text-decoration: none;
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+}
+
+.sidebar a:hover {
+  background-color: #f0f0f0;
+}
+
+/* Área principal */
+main {
+  flex: 1;
+  padding: 1.5rem;
+}
+
+/* Barra superior */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+/* Campo de búsqueda */
+.search-bar input {
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+
+/* Botón "Planear auditoría" */
 .plan-btn {
-  background-color: #1e3a8a;
+  background-color: #1565c0;
   color: white;
   border: none;
-  padding: 0.6rem 1rem;
-  border-radius: 5px;
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
   cursor: pointer;
-  font-family: 'Georgia', serif;
+  font-family: inherit;
 }
 
-/* Tabla con auditorías */
+.plan-btn:hover {
+  background-color: #0d47a1;
+}
+
+/* Tabla de auditorías */
 table {
   width: 100%;
-  margin-top: 2rem;
   border-collapse: collapse;
   background-color: #fff;
   border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-/* Estilo de encabezados y celdas de la tabla */
-th, td {
+th {
   text-align: left;
-  padding: 1rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.75rem 1rem;
+  background-color: #f8f9fa;
   border-bottom: 1px solid #ddd;
+  color: #2c3e50;
 }
 
-/* Botón azul para "Generar Informe" en cada fila */
+td {
+  padding: 0.65rem 1rem;
+  font-size: 0.85rem;
+  border-bottom: 1px solid #eee;
+  color: #333;
+}
+
+/* Botón "Generar Informe" */
 .report-btn {
-  background-color: #1e3a8a;
+  background-color: #1565c0;
   color: white;
   border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.8rem;
+  border-radius: 6px;
   cursor: pointer;
-  font-family: 'Georgia', serif;
+  font-family: inherit;
 }
 
+.report-btn:hover {
+  background-color: #0d47a1;
+}

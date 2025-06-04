@@ -156,6 +156,19 @@
             grafico.data.datasets[0].data[index] = nuevoValor;
             grafico.update();
         }
+         const userIcon = document.querySelector('.user-icon');
+  const dropdown = document.querySelector('.user-dropdown');
+
+  userIcon.addEventListener('click', () => {
+    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+  });
+
+  // Opcional: cerrar el dropdown si haces clic fuera
+  window.addEventListener('click', (e) => {
+    if (!e.target.closest('.user-menu')) {
+      dropdown.style.display = 'none';
+    }
+  });
     </script>
 
 </body>

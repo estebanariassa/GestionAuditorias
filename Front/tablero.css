@@ -1,6 +1,6 @@
 /* Botón principal del tablero */
 .btn-tablero {
-    background: linear-gradient(135deg, #ea6666 0%, #4ea24b 100%);
+    background: linear-gradient(135deg, #00b894 0%, #0984e3 100%);
     color: white;
     border: none;
     padding: 12px 24px;
@@ -9,13 +9,13 @@
     font-size: 16px;
     font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-    font-family:Georgia, 'Times New Roman', Times, serif;
+    box-shadow: 0 4px 15px rgba(9, 132, 227, 0.3);
+    font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
 }
 
 .btn-tablero:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 6px 20px rgba(9, 132, 227, 0.4);
 }
 
 /* Modal para configuración */
@@ -33,21 +33,23 @@
 }
 
 .modal-content {
-    background: white;
+    background: #ffffff;
     padding: 30px;
     border-radius: 12px;
     width: 90%;
     max-width: 500px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
 }
 
 /* Dashboard container */
 .dashboard-container {
     margin-top: 20px;
-    background: #f8f9fa;
+    background: #f1f3f5;
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
 }
 
 .dashboard-grid {
@@ -58,11 +60,12 @@
 }
 
 .chart-box, .kpi-box {
-    background: white;
+    background: #ffffff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    border-left: 4px solid #667eea;
+    border-left: 4px solid #00b894;
+    font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
 }
 
 /* Utilidades */
@@ -77,17 +80,23 @@
     margin: 5px;
     cursor: pointer;
     font-weight: 600;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
 }
 
 .btn-generar {
-    background: #28a745;
+    background: #00b894; /* Verde esmeralda moderno */
     color: white;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.btn-generar:hover {
+    background: #019170;
 }
 
 .btn-cancelar {
-    background: #6c757d;
+    background: #636e72; /* Gris oscuro moderno */
     color: white;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.btn-cancelar:hover {
+    background: #4b5256;
 }
