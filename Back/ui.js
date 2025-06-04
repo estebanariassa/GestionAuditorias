@@ -1,4 +1,4 @@
-
+  
 class IndicadoresAuditoria {
     constructor(db) {
       this.db = db; // instancia de conexión a la base de datos
